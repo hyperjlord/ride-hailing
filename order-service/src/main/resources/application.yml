@@ -1,0 +1,18 @@
+server:
+  port: 8763
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: order-service
+  datasource:
+  driver-class-name: com.mysql.jdbc.Driver
+  url:jdbc: mysql://101.132.159.218:3306/orderdb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+  username: root
+  password: yfjyyj102030
+mybatis:
+  #mapper-locations: classpath:mapping/*Mapper.xml
+  #type-aliases-package: com.example.entity
+  type-aliases-package: com.example.oderservice.pojo
