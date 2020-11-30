@@ -6,13 +6,12 @@ import com.example.orderservice.service.OrderService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.ws.rs.POST;
 import java.net.http.HttpRequest;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -47,6 +46,20 @@ public class OrderController {
     public List<Order> getMatchOrders(@ApiParam(value ="司机所在的经度" ) @RequestParam("lon") Double longitude,
                                       @ApiParam(value ="司机所在的纬度" ) @RequestParam("lat") Double latitude){
         return  orderService.getMatchOrders(longitude,latitude);
+    }
+    @ApiOperation(value = "乘客发布需求订单",notes="乘客发布顺风车需求订单")
+    @PostMapping("/setuporder")
+    public void setUpOrder(@RequestParam("user_id") String user_id,
+                           @RequestParam("from_name") String from_name,
+                           @RequestParam("to_name") String to_name,
+                           @RequestParam("from_lon") Double from_lon,
+                           @RequestParam("from_lat") Double from_lat,
+                           @RequestParam("to_lon") Double to_lon,
+                           @RequestParam("to_lat") Double to_lat,
+                           @RequestParam("date") Date date,
+                           @RequestParam("passenger_num") int passenger_num
+                           ){
+        orderService.insertOrder(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num);
     }
 
 }

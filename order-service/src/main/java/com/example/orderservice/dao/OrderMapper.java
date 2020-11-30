@@ -5,6 +5,7 @@ import com.example.orderservice.pojo.Passenger;
 import org.apache.ibatis.annotations.*;
 
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -52,4 +53,9 @@ public interface OrderMapper {
 
     @Select("select * from passengers where user_id = #{user_id}")
     Passenger findPassengers(String user_id);
+
+    @Insert("INSERT INTO user_oder(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num) " +
+            "VALUES (#{user_id},#{from_name},#{to_name},#{from_lon},#{from_lat},#{to_lon},#{to_lat},#{date},#{passenger_num})")
+    void insertOrder(String user_id, String from_name, String to_name,
+                     Double from_lon, Double from_lat, Double to_lon, Double to_lat, Date date, int passenger_num);
 }
