@@ -9,6 +9,20 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 zuul:
   routes:
-    oderServiceApi:
+    order-service:
       path: /orderservice/**
       serviceId: order-service
+  #是否开启重试功能
+  retryable: true
+ribbon:
+  #对当前服务的重试次数
+  MaxAutoRetries: 2
+  #切换相同Server的次数
+  MaxAutoRetriesNextServer: 0
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 12000

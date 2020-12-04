@@ -6,11 +6,13 @@ import com.example.orderservice.service.OrderService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.ws.rs.POST;
 import java.net.http.HttpRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -49,17 +51,39 @@ public class OrderController {
     }
     @ApiOperation(value = "乘客发布需求订单",notes="乘客发布顺风车需求订单")
     @PostMapping("/setuporder")
-    public void setUpOrder(@RequestParam("user_id") String user_id,
+    public String setUpOrder(@RequestParam(value = "user_id",required = false) String user_id,
+                             @RequestParam(value = "from_name",required = false) String from_name,
+                             @RequestParam(value = "to_name",required = false) String to_name,
+                             @RequestParam(value = "from_lon",required = false) Double from_lon,
+                             @RequestParam(value = "from_lat",required = false) Double from_lat,
+                             @RequestParam(value = "to_lon",required = false) Double to_lon,
+                             @RequestParam(value = "to_lat",required = false) Double to_lat,
+                             @RequestParam(value = "date",required = false) Date date,
+                             @RequestParam(value = "passenger_num",required = false) int passenger_num
+    ) {
+        if (date != null){
+            orderService.insertOrder(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num);
+            return date.toString()+to_name;
+        }
+        else
+            return "not ok";
+    }
+    /*
+    public String setUpOrder(@RequestParam("user_id") String user_id,
                            @RequestParam("from_name") String from_name,
                            @RequestParam("to_name") String to_name,
                            @RequestParam("from_lon") Double from_lon,
                            @RequestParam("from_lat") Double from_lat,
                            @RequestParam("to_lon") Double to_lon,
                            @RequestParam("to_lat") Double to_lat,
-                           @RequestParam("date") Date date,
+                           @RequestParam("date") String date,
                            @RequestParam("passenger_num") int passenger_num
                            ){
-        orderService.insertOrder(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num);
-    }
+        if(date!=null)
+            return "ok";
+        else
+            return "not ok";
+        //orderService.insertOrder(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num);
+    }*/
 
 }
