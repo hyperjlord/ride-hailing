@@ -16,10 +16,10 @@ public interface OrderMapper {
             @Result(property = "passengers", column = "user_id",
                     many = @Many(select="findPassengers")),
     })*/
-    @Select("select * from order")
+    @Select("select * from soadb.order")
     List<Order> findAllOrders();
 
-    @Select("select * from order where user_id = #{user_id}")
+    @Select("select * from soadb.order where user_id = #{user_id}")
     Order findById(String user_id);
 
     @Select("SELECT" +
@@ -35,12 +35,12 @@ public interface OrderMapper {
             "            )" +
             "        ) * 1000" +
             "    ) AS distance " +
-            "FROM order " +
+            "FROM soadb.order " +
             "ORDER BY distance ASC " +
             "LIMIT 20;")
     List<Order> findMatchOrders(@Param("lon") Double lon,@Param("lat") Double lat);
 
-    @Insert("INSERT INTO order(order_id,type,state,user_id,passenger_num,datetime," +
+    @Insert("INSERT INTO soadb.order(order_id,type,state,user_id,passenger_num,datetime," +
             "from_name,to_name,from_lon,from_lat,to_lon,to_lat,driver_id,description) " +
             "VALUES (#{order_id},#{type},#{state},#{user_id},#{passenger_num},#{datetime}," +
             "#{from_name},#{to_name},#{from_lon},#{from_lat},#{to_lon},#{to_lat},#{driver_id},#{description})")

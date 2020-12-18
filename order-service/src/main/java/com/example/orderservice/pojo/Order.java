@@ -11,9 +11,9 @@ import java.util.List;
 @Data
 public class Order{
     public Long order_id;
-    public String user_id;
     public int type;
     public int state;
+    public String user_id;
     public int passenger_num;
     public Date datetime;
     public String from_name;
