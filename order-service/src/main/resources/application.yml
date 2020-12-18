@@ -9,9 +9,9 @@ spring:
     name: order-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.132.159.218:3306/orderdb?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    username: root
-    password: yfjyyj102030
+    url: jdbc:mysql://uf6o41v4s83p4lh22125010hm.mysql.rds.aliyuncs.com:3306/soadb?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: ridehailing01
+    password: Hx123456
 mybatis:
   #mapper-locations: classpath:mapping/*Mapper.xml
   #type-aliases-package: com.example.entity

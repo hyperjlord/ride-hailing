@@ -1,19 +1,13 @@
-package com.example.orderservice.pojo;
-
-
+package com.example.orderservice.qo;
 
 import lombok.Data;
 
-
 import java.util.Date;
-import java.util.List;
-
 @Data
-public class Order{
+public class SetOrderQO {
     public Long order_id;
     public String user_id;
     public int type;
-    public int state;
     public int passenger_num;
     public Date datetime;
     public String from_name;
@@ -22,6 +16,5 @@ public class Order{
     public Double from_lon;
     public Double to_lat;
     public Double to_lon;
-    public String driver_id;
     public String description;
 }

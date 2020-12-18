@@ -10,27 +10,20 @@ import java.util.List;
 
 @Mapper
 public interface OrderMapper {
-    @Select("select * from user_order")
-    @Results(value = {
+
+   /* @Results(value = {
             @Result(property = "user_id", column = "user_id"),
             @Result(property = "passengers", column = "user_id",
                     many = @Many(select="findPassengers")),
-    })
-    List<Order> selectAllOrders();
+    })*/
+    @Select("select * from order")
+    List<Order> findAllOrders();
 
-    @Select("select * from user_order where user_id = #{user_id}")
-    Order selectById(String user_id);
+    @Select("select * from order where user_id = #{user_id}")
+    Order findById(String user_id);
 
     @Select("SELECT" +
-            "    user_id ," +
-            "    from_name ," +
-            "    to_name ," +
-            "    from_lon ," +
-            "    from_lat ," +
-            "    to_lon ," +
-            "    to_lat ," +
-            "    passenger_num ," +
-            "    date ," +
+            "*, "+
             "    ROUND(" +
             "        6378.138 * 2 * ASIN(" +
             "            SQRT(" +
@@ -42,20 +35,14 @@ public interface OrderMapper {
             "            )" +
             "        ) * 1000" +
             "    ) AS distance " +
-            "FROM user_order " +
+            "FROM order " +
             "ORDER BY distance ASC " +
             "LIMIT 20;")
-    @Results(value = {
-            @Result(property = "passengers", column = "user_id",
-                    many = @Many(select="findPassengers")),
-    })
-    List<Order> getMatchOrders(@Param("lon") Double lon,@Param("lat") Double lat);
+    List<Order> findMatchOrders(@Param("lon") Double lon,@Param("lat") Double lat);
 
-    @Select("select * from passengers where user_id = #{user_id}")
-    Passenger findPassengers(String user_id);
-
-    @Insert("INSERT INTO user_order(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num) " +
-            "VALUES (#{user_id},#{from_name},#{to_name},#{from_lon},#{from_lat},#{to_lon},#{to_lat},#{date},#{passenger_num})")
-    void insertOrder(String user_id, String from_name, String to_name,
-                     Double from_lon, Double from_lat, Double to_lon, Double to_lat, Date date, int passenger_num);
+    @Insert("INSERT INTO order(order_id,type,state,user_id,passenger_num,datetime," +
+            "from_name,to_name,from_lon,from_lat,to_lon,to_lat,driver_id,description) " +
+            "VALUES (#{order_id},#{type},#{state},#{user_id},#{passenger_num},#{datetime}," +
+            "#{from_name},#{to_name},#{from_lon},#{from_lat},#{to_lon},#{to_lat},#{driver_id},#{description})")
+    void saveOrder(Order order);
 }

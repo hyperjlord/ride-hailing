@@ -2,7 +2,9 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dao.OrderMapper;
 import com.example.orderservice.pojo.Order;
+import com.example.orderservice.qo.SetOrderQO;
 import com.example.orderservice.service.OrderService;
+import com.example.orderservice.vo.SetOrderVO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,19 @@ public class OrderController {
                                       @ApiParam(value ="司机所在的纬度" ) @RequestParam("lat") Double latitude){
         return  orderService.getMatchOrders(longitude,latitude);
     }
+    @ApiOperation(value = "乘客发布需求订单",notes="乘客发布需求订单,type=1为顺风车，type=2为打车")
+    @PostMapping("/setuporder")
+    public SetOrderVO setUpOrder(@RequestBody SetOrderQO setOrderQO) {
+        SetOrderVO setOrderVO=new SetOrderVO();
+        if(setOrderQO==null){
+            setOrderVO.setErrorInfo("请求失败");
+            return setOrderVO;
+        }
+        orderService.setNewOrder(setOrderQO);
+        setOrderVO.setErrorInfo("请求成功");
+        return setOrderVO;
+    }
+    /*
     @ApiOperation(value = "乘客发布需求订单",notes="乘客发布顺风车需求订单")
     @PostMapping("/setuporder")
     public String setUpOrder(@RequestParam(value = "user_id",required = false) String user_id,
@@ -67,23 +82,6 @@ public class OrderController {
         }
         else
             return "not ok";
-    }
-    /*
-    public String setUpOrder(@RequestParam("user_id") String user_id,
-                           @RequestParam("from_name") String from_name,
-                           @RequestParam("to_name") String to_name,
-                           @RequestParam("from_lon") Double from_lon,
-                           @RequestParam("from_lat") Double from_lat,
-                           @RequestParam("to_lon") Double to_lon,
-                           @RequestParam("to_lat") Double to_lat,
-                           @RequestParam("date") String date,
-                           @RequestParam("passenger_num") int passenger_num
-                           ){
-        if(date!=null)
-            return "ok";
-        else
-            return "not ok";
-        //orderService.insertOrder(user_id,from_name,to_name,from_lon,from_lat,to_lon,to_lat,date,passenger_num);
     }*/
 
 }

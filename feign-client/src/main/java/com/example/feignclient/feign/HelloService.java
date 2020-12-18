@@ -10,4 +10,5 @@ public class HelloService {
     public String sayHello(){
         return eurekaClientFeign.sayHelloFromOrderService();
     }
+    public String selectall(){return  eurekaClientFeign.selectall();}
 }
