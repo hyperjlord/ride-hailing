@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -32,7 +33,7 @@ public class OrderService {
 
     public void setNewOrder(SetOrderQO setOrderQO) {
         Order order=new Order();
-        order.setOrder_id(setOrderQO.getOrder_id());
+        order.setOrder_id(UUID.randomUUID().toString());
         order.setUser_id(setOrderQO.getUser_id());
         order.setType(setOrderQO.getType());
         order.setDatetime(setOrderQO.getDatetime());

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 public class Order{
-    public Long order_id;
+    public String order_id;
     public int type;
     public int state;
     public String user_id;

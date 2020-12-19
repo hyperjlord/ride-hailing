@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class SetOrderQO {
-    public Long order_id;
     public String user_id;
     public int type;
     public int passenger_num;
