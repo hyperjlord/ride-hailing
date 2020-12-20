@@ -15,6 +15,7 @@ public class Order{
     public int state;
     public String user_id;
     public int passenger_num;
+    public Double price;
     public Date datetime;
     public String from_name;
     public String to_name;

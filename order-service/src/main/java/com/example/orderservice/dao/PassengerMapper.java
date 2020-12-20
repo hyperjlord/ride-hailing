@@ -2,10 +2,12 @@ package com.example.orderservice.dao;
 
 import com.example.orderservice.pojo.Passenger;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface PassengerMapper {
-    @Select("select * from passenger where user_id = #{user_id}")
-    Passenger findPassengerById(String user_id);
+    Passenger findPassengerById(@Param("user_id") String user_id);
+    String findPassengerFromOrder(@Param("order_id") String order_id);
+    int updateBalance(Passenger passenger);
 }

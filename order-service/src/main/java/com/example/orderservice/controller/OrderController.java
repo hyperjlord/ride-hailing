@@ -4,9 +4,12 @@ import com.example.orderservice.dao.OrderMapper;
 import com.example.orderservice.pojo.Order;
 import com.example.orderservice.qo.SetOrderQO;
 import com.example.orderservice.service.OrderService;
+import com.example.orderservice.vo.FinishOrderVo;
+import com.example.orderservice.vo.OrderDetailVo;
 import com.example.orderservice.vo.SetOrderVO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +40,11 @@ public class OrderController {
     public List<Order> selectall(){
         return orderService.selectAll();
     }
+    @ApiOperation(value = "查询所有订单详情",notes="返回数据库中所有的订单信息，包括订单对应的评论")
+    @GetMapping("/selectall/detail")
+    public List<OrderDetailVo> selectAllDetail(){
+        return orderService.selectAllDetail();
+    }
 
     @ApiOperation(value = "根据用户id返回订单",notes = "根据用户id返回订单")
     @GetMapping("/selectbyid")
@@ -62,6 +70,30 @@ public class OrderController {
         orderService.setNewOrder(setOrderQO);
         setOrderVO.setErrorInfo("请求成功");
         return setOrderVO;
+    }
+    @ApiOperation(value = "司机接单",
+            notes = "司机确认接单时调用该请求，订单状态由0变为1（订单已被接单）")
+    @GetMapping("/takeorder" )
+    public int takeOrder(@Param("order_id") String order_id,@Param("driver_id") String driver_id){
+        return orderService.takeOrder(order_id,driver_id);
+    }
+    @ApiOperation(value = "司机接人",
+            notes="前端确认司机与乘客距离符合要求后调用该请求,订单状态由1(已接单)变为2（订单进行中）")
+    @GetMapping("/pickup")
+    public int pickUp(@Param("order_id") String order_id){
+        return orderService.pickUp(order_id);
+    }
+    @ApiOperation(value = "完成订单",notes = "根据订单id结束订单，前提是订单目前状态为进行中，即state=2")
+    @GetMapping("/finishorder")
+    public FinishOrderVo finshOrder(@Param("order_id") String order_id){
+        return orderService.finishOrder(order_id);
+    }
+    @ApiOperation(value = "用户评价订单",notes = "用户对已完成的订单进行打分评价")
+    @PostMapping("/savecomment")
+    public void saveComment(@Param("order_id") String order_id,
+                            @Param("score") Double score,
+                            @Param("content") String content){
+        orderService.saveComment(order_id,score,content);
     }
     /*
     @ApiOperation(value = "乘客发布需求订单",notes="乘客发布顺风车需求订单")

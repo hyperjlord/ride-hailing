@@ -1,7 +1,9 @@
 package com.example.orderservice.dao;
 
+import com.example.orderservice.pojo.Comment;
 import com.example.orderservice.pojo.Order;
 import com.example.orderservice.pojo.Passenger;
+import com.example.orderservice.vo.OrderDetailVo;
 import org.apache.ibatis.annotations.*;
 
 
@@ -10,6 +12,13 @@ import java.util.List;
 
 @Mapper
 public interface OrderMapper {
+
+   List<OrderDetailVo> findAllDetail();
+   Comment findCommentById(@Param("order_id") String order_id);
+   int takeOrder(@Param("order_id")String order_id,@Param("driver_id") String driver_id);
+   int pickUp(@Param("order_id")String order_id);
+   int finishOrder(@Param("order_id")String order_id);
+   int saveComment(@Param("order_id")String order_id,@Param("score") Double score,@Param("content") String content);
 
    /* @Results(value = {
             @Result(property = "user_id", column = "user_id"),
@@ -20,7 +29,7 @@ public interface OrderMapper {
     List<Order> findAllOrders();
 
     @Select("select * from soadb.order where user_id = #{user_id}")
-    Order findById(String user_id);
+    Order findOrderById(String user_id);
 
     @Select("SELECT" +
             "*, "+
