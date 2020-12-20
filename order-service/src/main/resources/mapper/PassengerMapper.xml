@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.orderservice.dao.PassengerMapper" >
     <select id="findPassengerById" resultType="Passenger">
-    SELECT * FROM passenger WHERE user_id = #{user_id}
+    SELECT * FROM soadb.passenger WHERE user_id = #{user_id}
     </select>
     <select id="findPassengerFromOrder">
         SELECT user_id FROM soadb.order WHERE order_id = #{order_id};
