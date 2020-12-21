@@ -74,25 +74,25 @@ public class OrderController {
     @ApiOperation(value = "司机接单",
             notes = "司机确认接单时调用该请求，订单状态由0变为1（订单已被接单）")
     @GetMapping("/takeorder" )
-    public int takeOrder(@Param("order_id") String order_id,@Param("driver_id") String driver_id){
+    public int takeOrder(@RequestParam("order_id") String order_id,@RequestParam("driver_id") String driver_id){
         return orderService.takeOrder(order_id,driver_id);
     }
     @ApiOperation(value = "司机接人",
             notes="前端确认司机与乘客距离符合要求后调用该请求,订单状态由1(已接单)变为2（订单进行中）")
     @GetMapping("/pickup")
-    public int pickUp(@Param("order_id") String order_id){
+    public int pickUp(@RequestParam("order_id") String order_id){
         return orderService.pickUp(order_id);
     }
     @ApiOperation(value = "完成订单",notes = "根据订单id结束订单，前提是订单目前状态为进行中，即state=2")
     @GetMapping("/finishorder")
-    public FinishOrderVo finshOrder(@Param("order_id") String order_id){
+    public FinishOrderVo finshOrder(@RequestParam("order_id") String order_id){
         return orderService.finishOrder(order_id);
     }
     @ApiOperation(value = "用户评价订单",notes = "用户对已完成的订单进行打分评价")
     @PostMapping("/savecomment")
-    public void saveComment(@Param("order_id") String order_id,
-                            @Param("score") Double score,
-                            @Param("content") String content){
+    public void saveComment(@RequestParam("order_id") String order_id,
+                            @RequestParam("score") Double score,
+                            @RequestParam("content") String content){
         orderService.saveComment(order_id,score,content);
     }
     /*
