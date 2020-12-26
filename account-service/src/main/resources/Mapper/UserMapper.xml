@@ -16,12 +16,24 @@
         SELECT * FROM passenger where user_id=#{userId}
     </select>
 
+    <select id="findDriverIdIsExist" resultType="top.wx.pojo.Driver">
+        SELECT * FROM driver where driver_id=#{driverId}
+    </select>
+
     <insert id="saveUser">
-		insert into passenger(user_id,name,password) values(#{user_id},#{name},#{password})
+		insert into passenger(user_id,name,password,sex,balance) values(#{user_id},#{name},#{password},#{sex},#{balance})
+    </insert>
+
+    <insert id="saveDriver">
+		insert into driver(driver_id,name,password,sex,score,id_card,drive_age,balance) values(#{driver_id},#{name},#{password},#{sex},#{score},#{id_card},#{drive_age},#{balance})
     </insert>
     
     <select id="queryUserForLogin" resultType="top.wx.pojo.Passenger">
         SELECT * FROM passenger where user_id=#{param1} and password=#{param2}
+    </select>
+
+    <select id="queryDriverForLogin" resultType="top.wx.pojo.Driver">
+        SELECT * FROM driver where driver_id=#{param1} and password=#{param2}
     </select>
   
 </mapper>

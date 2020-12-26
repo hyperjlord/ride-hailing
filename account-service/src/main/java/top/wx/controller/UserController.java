@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import top.wx.common.JsonResult;
 import top.wx.pojo.Passenger;
+import top.wx.pojo.Driver;
 import top.wx.service.Userservice;
 
 
@@ -16,7 +17,7 @@ public class UserController {
 	@Autowired
 	private Userservice userservice;
 		
-	//用户注册
+	//乘客注册
 	//@PostMapping("/register")
 	@ResponseBody
 	@RequestMapping(value = "/register", headers = {
@@ -44,7 +45,30 @@ public class UserController {
 		return JsonResult.buildData(user);
 	}
 
-	//用户登录
+	//司机注册
+	//@PostMapping("/registerDriver")
+	@ResponseBody
+	@RequestMapping(value = "/registerDriver", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult registerDriver(@RequestBody Driver driver) {
+
+		//System.out.println("LOADING……");
+		//判断用户id和密码不为空
+		if(StringUtils.isBlank(driver.getDriverId()) || StringUtils.isBlank(driver.getPassword()) ) {
+			return JsonResult.errorMsg("账号和密码不能为空");
+		}
+
+		//判断用户id是否存在
+		if(!userservice.findDriverIdIsExist(driver.getDriverId())) {
+			userservice.saveDriver(driver);
+		}else {
+			return JsonResult.errorMsg("账号已存在");
+		}
+		driver.setPassword("");//不显示密码
+		return JsonResult.buildData(driver);
+	}
+
+	//乘客登录
 	@ResponseBody
 	@RequestMapping(value = "/login", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -66,12 +90,35 @@ public class UserController {
 			return JsonResult.errorMsg("账号或密码不正确");
 		}		
 	}
+
+	//司机登录
+	@ResponseBody
+	@RequestMapping(value = "/loginDriver", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult loginDriver(@RequestBody Driver driver) {
+		String id = driver.getDriverId();
+		String password = driver.getPassword();
+
+		//判断用户id和密码不为空
+		if(StringUtils.isBlank(id) || StringUtils.isBlank(password) ) {
+			return JsonResult.errorMsg("账号和密码不能为空");
+		}
+
+		//判断用户id是否存在  返回值类型为User
+		Driver driverReslut=userservice.queryDriverForLogin(id,password);
+		if(driverReslut != null) {
+			driverReslut.setPassword("");
+			return JsonResult.buildData(driverReslut);
+		}else {
+			return JsonResult.errorMsg("账号或密码不正确");
+		}
+	}
 	
 	//微信登录
 	/*@PostMapping("/wxLogin")
 	public JsonResult wxLogin(String code) {
-		
-		System.out.println("code:" + code);	
+
+		System.out.println("code:" + code);
 //		登录凭证校验。通过 wx.login 接口获得临时登录凭证 code 后传到开发者服务器调用此接口完成登录流程
 //		请求地址
 //		GET https://api.weixin.qq.com/sns/jscode2session?
@@ -79,18 +126,18 @@ public class UserController {
 //				secret=SECRET&
 //				js_code=JSCODE&
 //				grant_type=authorization_code
-		
+
 		String url = "https://api.weixin.qq.com/sns/jscode2session";
 		Map<String, String> param = new HashMap<>();
 		param.put("appid", "appid");
 		param.put("secret", "开发者秘钥");
 		param.put("js_code", code);
 		param.put("grant_type", "authorization_code");
-		
+
 		//发起get请求
 		String wxResult = HttpClientUtil.doGet(url, param);
 		System.out.println(wxResult);
-					
+
 		return JsonResult.buildData("微信登录成功");
 	 */
 	}
