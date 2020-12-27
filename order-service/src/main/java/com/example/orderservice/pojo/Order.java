@@ -3,11 +3,13 @@ package com.example.orderservice.pojo;
 
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 
 import java.util.Date;
 import java.util.List;
 
+@Alias("Order")
 @Data
 public class Order{
     public String order_id;

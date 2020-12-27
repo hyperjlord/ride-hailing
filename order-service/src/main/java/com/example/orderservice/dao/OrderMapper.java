@@ -5,6 +5,7 @@ import com.example.orderservice.pojo.Order;
 import com.example.orderservice.pojo.Passenger;
 import com.example.orderservice.vo.OrderDetailVo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.Date;

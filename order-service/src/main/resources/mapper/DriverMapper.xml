@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.orderservice.dao.DriverMapper" >
-    <select id="findDriverById" resultType="Driver">
-        SELECT * FROM soadb.driver WHERE driver_id = #{driver_id}
+    <select id="findDriverById" resultType="com.example.orderservice.pojo.Driver">
+        SELECT * FROM soadb.driver WHERE driver_id = #{driver_id};
     </select>
     <select id="findDriverFromOrder">
-        SELECT driver_id from  soadb.order WHERE order_id = #{order_id};
+        SELECT driver_id from soadb.order WHERE order_id = #{order_id};
     </select>
-    <update id="updateBalance" parameterType="Driver">
+    <update id="updateBalance" parameterType="com.example.orderservice.pojo.Driver">
         UPDATE soadb.driver SET balance = #{balance} WHERE driver_id = #{driver_id};
     </update>
 </mapper>

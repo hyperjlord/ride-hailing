@@ -13,7 +13,5 @@ spring:
     username: ridehailing01
     password: Hx123456
 mybatis:
-  #mapper-locations: classpath:mapping/*Mapper.xml
-  #type-aliases-package: com.example.entity
   type-aliases-package: com.example.oderservice.pojo
   mapper-locations: classpath:mapper/*.xml
