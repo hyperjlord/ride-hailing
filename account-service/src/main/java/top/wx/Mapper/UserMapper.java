@@ -2,6 +2,7 @@ package top.wx.Mapper;
 
 import top.wx.pojo.Passenger;
 import top.wx.pojo.Driver;
+import top.wx.pojo.Car;
 
 public interface UserMapper {
 
@@ -12,6 +13,12 @@ public interface UserMapper {
 	public void saveUser(Passenger user);
 
 	public void saveDriver(Driver driver);
+
+	public void saveCar(Car car);
+
+	public void saveDriverPicUrl(Driver driver);
+
+	public void savePassengerPicUrl(Passenger passenger);
 
 	public Passenger queryUserForLogin(String userId, String password);
 
