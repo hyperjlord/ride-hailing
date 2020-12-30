@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import top.wx.common.JsonResult;
 import top.wx.pojo.Passenger;
 import top.wx.pojo.Driver;
+import top.wx.pojo.Car;
 import top.wx.service.Userservice;
 
 
@@ -27,9 +28,6 @@ public class UserController {
 		//System.out.println("LOADING……");
 		//System.out.println(user.getUserId());
 		//System.out.println(user.getPassword());
-		//System.out.println(user.getName());
-		//System.out.println(user.getSex());
-		//System.out.println(user.getBalance());
 		//判断用户id和密码不为空
 		if(StringUtils.isBlank(user.getUserId()) || StringUtils.isBlank(user.getPassword()) ) {
 			return JsonResult.errorMsg("账号和密码不能为空");
@@ -113,7 +111,81 @@ public class UserController {
 			return JsonResult.errorMsg("账号或密码不正确");
 		}
 	}
-	
+
+	//上传车辆信息
+	@ResponseBody
+	@RequestMapping(value = "/uploadCar", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult uploadCar(@RequestBody Car car) {
+
+		//判断车辆信息不为空
+		//车辆图片可以为空
+		if(StringUtils.isBlank(car.getDriverId()) || StringUtils.isBlank(car.getCarNumber()) || StringUtils.isBlank(car.getBrand()) || StringUtils.isBlank(car.getModel()) || StringUtils.isBlank(car.getColor()) ) {
+			if(StringUtils.isBlank(car.getDriverId())) {
+				return JsonResult.errorMsg("司机信息不能为空");
+			}
+			if(StringUtils.isBlank(car.getCarNumber())) {
+				return JsonResult.errorMsg("车牌号不能为空");
+			}
+			if(StringUtils.isBlank(car.getBrand())) {
+				return JsonResult.errorMsg("车辆品牌不能为空");
+			}
+			if(StringUtils.isBlank(car.getModel())) {
+				return JsonResult.errorMsg("车辆型号不能为空");
+			}
+			if(StringUtils.isBlank(car.getColor())) {
+				return JsonResult.errorMsg("车辆颜色不能为空");
+			}
+		}
+
+		//判断司机id是否存在  返回值类型为Car
+		if(userservice.findDriverIdIsExist(car.getDriverId())) {
+			userservice.saveCar(car);
+		}else {
+			return JsonResult.errorMsg("司机不存在");
+		}
+		return JsonResult.buildData(car);
+	}
+
+	//上传司机头像
+	@ResponseBody
+	@RequestMapping(value = "/uploadDriverIcon", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult uploadDriverIcon(@RequestBody Driver driver) {
+		//判断头像url不为空
+		if (StringUtils.isBlank(driver.getPicUrl())) {
+			return JsonResult.errorMsg("头像url不能为空");
+		}
+
+		//判断司机id是否存在 储存头像
+		if (userservice.findDriverIdIsExist(driver.getDriverId())) {
+			userservice.saveDriverPicUrl(driver);
+		} else {
+			return JsonResult.errorMsg("司机不存在");
+		}
+		return JsonResult.buildData(driver);
+	}
+
+	//上传乘客头像
+	@ResponseBody
+	@RequestMapping(value = "/uploadPassengerIcon", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult uploadPassengerIcon(@RequestBody Passenger passenger) {
+		//判断头像url不为空
+		if (StringUtils.isBlank(passenger.getPicUrl())) {
+			return JsonResult.errorMsg("头像url不能为空");
+		}
+
+		//判断乘客id是否存在 储存头像
+		if (userservice.findDriverIdIsExist(passenger.getUserId())) {
+			userservice.savePassengerPicUrl(passenger);
+		} else {
+			return JsonResult.errorMsg("乘客不存在");
+		}
+		return JsonResult.buildData(passenger);
+	}
+
+
 	//微信登录
 	/*@PostMapping("/wxLogin")
 	public JsonResult wxLogin(String code) {
