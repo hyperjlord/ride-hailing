@@ -12,6 +12,12 @@ zuul:
     order-service:
       path: /orderservice/**
       serviceId: order-service
+    emergency-service:
+      path: /emergencyservice/**
+      serviceId: emergency-service
+    account-service:
+      path: /accountservice/**
+      serviceId: account-service
   #是否开启重试功能
   retryable: true
 ribbon:
