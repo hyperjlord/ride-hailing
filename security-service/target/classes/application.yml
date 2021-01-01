@@ -9,9 +9,10 @@ spring:
     show-sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://rm-uf6o41v4s83p4lh22125010hm.mysql.rds.aliyuncs.com:3306/soadb?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
-    username: ridehailing01
-    password: Hx123456
+    url: jdbc:mysql://127.0.0.1:3306/contact?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+
+    username: root
+    password:
   mail:
     host: smtp.qq.com
     username: 436096861@qq.com

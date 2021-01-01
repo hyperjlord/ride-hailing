@@ -4,6 +4,7 @@ import com.soa.securityservice.pojo.Contact;
 import com.soa.securityservice.pojo.RspResult;
 import com.soa.securityservice.service.ContactService;
 import com.soa.securityservice.service.SendEmailService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class SendEmailController {
     @Autowired
     private ContactService contactService;
 
+    @ApiOperation(value = "乘客使用紧急联系服务", notes = "乘客点击按钮使用紧急联系服务")
     @RequestMapping(value = "/simpleEmail", method = {RequestMethod.GET})
     public RspResult sendSimpleEmail(HttpServletRequest request) {
 
