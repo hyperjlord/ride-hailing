@@ -1,19 +1,14 @@
 package com.example.orderservice.vo;
 
-import com.example.orderservice.pojo.Car;
-import com.example.orderservice.pojo.Comment;
-import com.example.orderservice.pojo.Passenger;
-import com.example.orderservice.dto.DriverDetailDto;
 import lombok.Data;
-import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 @Data
-public class OrderDetailVo {
+public class OrderWithDistanceVO {
     public String order_id;
     public int type;
     public int state;
-    public Passenger passenger;
+    public String user_id;
     public int passenger_num;
     public Double price;
     public Date datetime;
@@ -23,7 +18,7 @@ public class OrderDetailVo {
     public Double from_lon;
     public Double to_lat;
     public Double to_lon;
-    public DriverDetailDto driver;
+    public String driver_id;
     public String description;
-    public Comment comment;
+    public Double distance;
 }

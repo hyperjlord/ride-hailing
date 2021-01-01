@@ -11,4 +11,5 @@ public class Passenger {
     String name;
     String sex;
     Double balance;
+    String ppic_url;
 }

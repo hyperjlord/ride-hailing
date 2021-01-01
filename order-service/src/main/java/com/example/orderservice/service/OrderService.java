@@ -9,6 +9,7 @@ import com.example.orderservice.pojo.Passenger;
 import com.example.orderservice.qo.SetOrderQO;
 import com.example.orderservice.vo.FinishOrderVo;
 import com.example.orderservice.vo.OrderDetailVo;
+import com.example.orderservice.vo.OrderWithDistanceVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,15 +34,21 @@ public class OrderService {
         return orderMapper.findAllDetail();
     }
 
-    public List<Order> getMatchOrders(Double lon, Double lat) {
-        return orderMapper.findMatchOrders(lon, lat);
+    public List<OrderDetailVo> findOrderByUid(String user_id,int type){
+        return orderMapper.findOrderDetailByUserId(user_id,type);
     }
 
-    public Order selectById(String user_id) {
-        return orderMapper.findOrderById(user_id);
+    public List<OrderDetailVo> findOrderByUidAndState(String user_id,int type,int state){
+        return  orderMapper.findOrderDetailByUserIdAndState(user_id,type,state);
     }
 
+    public List<OrderWithDistanceVO> getMatchOrders(Double lon, Double lat,int type) {
+        return orderMapper.findNearestOrders(lon, lat, type);
+    }
+
+    //创建新订单
     public void setNewOrder(SetOrderQO setOrderQO) {
+        //用来构建订单
         Order order=new Order();
         order.setOrder_id(UUID.randomUUID().toString());
         order.setUser_id(setOrderQO.getUser_id());
@@ -61,13 +68,17 @@ public class OrderService {
         orderMapper.saveOrder(order);
     }
 
+    //司机接单
     public int takeOrder(String order_id,String driver_id){
         return orderMapper.takeOrder(order_id,driver_id);
     }
 
+    //司机接人
     public int pickUp(String order_id){
         return orderMapper.pickUp(order_id);
     }
+
+    //结束订单
     public FinishOrderVo finishOrder(String order_id){
         //先获取一个用于返回消息的对象
         FinishOrderVo finishOrderVo=new FinishOrderVo();
@@ -104,5 +115,12 @@ public class OrderService {
     }
     public void saveComment(String order_id, Double score,String content ){
         orderMapper.saveComment(order_id,score,content);
+    }
+    public void cancerOrder(String order_id,int type){
+        Order targetOrder=orderMapper.findOrderById(order_id);
+        int order_state=targetOrder.getState();
+        //只能取消未接单(state=0)和已接单(state=1)的订单
+        assert(order_state==0||order_state==1);
+        orderMapper.deleteByOid(order_id,type);
     }
 }

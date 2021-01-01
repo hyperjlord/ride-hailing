@@ -39,7 +39,6 @@ public class MyFilter extends ZuulFilter {
             requestContext.setResponseStatusCode(401);
             try{
                 requestContext.getResponse().getWriter().write("token is wrong!");
-
             }catch (Exception e){}
         }
         return null;
