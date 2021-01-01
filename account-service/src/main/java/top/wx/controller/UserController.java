@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.ApiOperation;
 
 import top.wx.common.JsonResult;
 import top.wx.pojo.Passenger;
@@ -19,7 +20,7 @@ public class UserController {
 	private Userservice userservice;
 		
 	//乘客注册
-	//@PostMapping("/register")
+	@ApiOperation(value = "乘客注册", notes = "乘客注册")
 	@ResponseBody
 	@RequestMapping(value = "/register", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -44,7 +45,7 @@ public class UserController {
 	}
 
 	//司机注册
-	//@PostMapping("/registerDriver")
+	@ApiOperation(value = "司机注册", notes = "司机注册")
 	@ResponseBody
 	@RequestMapping(value = "/registerDriver", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -67,6 +68,7 @@ public class UserController {
 	}
 
 	//乘客登录
+	@ApiOperation(value = "乘客登录", notes = "乘客登录")
 	@ResponseBody
 	@RequestMapping(value = "/login", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -90,6 +92,7 @@ public class UserController {
 	}
 
 	//司机登录
+	@ApiOperation(value = "司机登录", notes = "司机登录")
 	@ResponseBody
 	@RequestMapping(value = "/loginDriver", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -113,6 +116,7 @@ public class UserController {
 	}
 
 	//上传车辆信息
+	@ApiOperation(value = "上传车辆信息", notes = "上传车辆信息")
 	@ResponseBody
 	@RequestMapping(value = "/uploadCar", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -148,6 +152,7 @@ public class UserController {
 	}
 
 	//上传司机头像
+	@ApiOperation(value = "上传司机头像", notes = "上传司机头像")
 	@ResponseBody
 	@RequestMapping(value = "/uploadDriverIcon", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -167,6 +172,7 @@ public class UserController {
 	}
 
 	//上传乘客头像
+	@ApiOperation(value = "上传乘客头像", notes = "上传乘客头像")
 	@ResponseBody
 	@RequestMapping(value = "/uploadPassengerIcon", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
