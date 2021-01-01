@@ -95,15 +95,6 @@ public class OrderController {
         return setOrderVO;
     }
 
-    @ApiOperation(value = "乘客发布打车需求订单",notes = "乘客发布打车需求订单，需要的参数为起点终点的经纬度")
-    @PostMapping("/setuporder/2")
-    public SetOrderVO SetUpOrder(){
-        SetOrderVO setOrderVO=new SetOrderVO();
-
-        return setOrderVO;
-    }
-
-
     @ApiOperation(value = "司机接单",
             notes = "司机确认接单时调用该请求，订单状态由0变为1（订单已被接单）")
     @GetMapping("/takeorder" )
