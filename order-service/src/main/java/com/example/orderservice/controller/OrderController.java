@@ -82,7 +82,7 @@ public class OrderController {
         return  orderService.getMatchOrders(longitude,latitude,type);
     }
 
-    @ApiOperation(value = "乘客发布顺风车需求订单",notes="乘客发布需求订单,type=1为顺风车，type=2为打车")
+    @ApiOperation(value = "乘客发布需求订单",notes="乘客发布需求订单,type=1为顺风车，type=2为打车")
     @PostMapping("/setuporder/1")
     public SetOrderVO setUpOrder(@RequestBody SetOrderQO setOrderQO) {
         SetOrderVO setOrderVO=new SetOrderVO();
