@@ -27,7 +27,19 @@
     <insert id="saveDriver">
 		insert into driver(driver_id,name,password,sex,score,id_card,drive_age,balance) values(#{driver_id},#{name},#{password},#{sex},#{score},#{id_card},#{drive_age},#{balance})
     </insert>
-    
+
+    <insert id="saveCar">
+		insert into car(driver_id,car_number,brand,model,color,pic_url) values(#{driver_id},#{car_number},#{brand},#{model},#{color},#{pic_url})
+    </insert>
+
+    <insert id="saveDriverPicUrl">
+        UPDATE driver SET pic_url = #{pic_url} WHERE driver_id = #{driver_id}
+    </insert>
+
+    <insert id="savePassengerPicUrl">
+        UPDATE passenger SET pic_url = #{pic_url} WHERE user_id = #{user_id}
+    </insert>
+
     <select id="queryUserForLogin" resultType="top.wx.pojo.Passenger">
         SELECT * FROM passenger where user_id=#{param1} and password=#{param2}
     </select>

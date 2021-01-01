@@ -3,11 +3,13 @@ package top.wx.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import top.wx.Mapper.UserMapper;
 import top.wx.pojo.Passenger;
 import top.wx.pojo.Driver;
+import top.wx.pojo.Car;
 
 @Service
 public class Userservice {
@@ -32,6 +34,14 @@ public class Userservice {
 	public void saveDriver(Driver driver) {
 		userMapper.saveDriver(driver);
 	}
+
+	public void saveCar(Car car) {
+		userMapper.saveCar(car);
+	}
+
+	public void saveDriverPicUrl(Driver driver){ userMapper.saveDriverPicUrl(driver); }
+
+	public void savePassengerPicUrl(Passenger passenger){ userMapper.savePassengerPicUrl(passenger); }
 
 	public Passenger queryUserForLogin(String userId, String password) {
 		return userMapper.queryUserForLogin(userId,password);
