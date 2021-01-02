@@ -37,7 +37,7 @@
                     )
                 AS distance
         FROM soadb.order
-        WHERE `type` = 2 AND `datetime` >= #{current_time}
+        WHERE `type` = 2 AND `state`=0
         ORDER BY distance ASC;
     </select>
     <select id="findMatchOrders" resultType="com.example.orderservice.vo.OrderWithDistanceVO">
@@ -61,7 +61,7 @@
                    )
                 )AS distance
         FROM soadb.order
-        WHERE `type` = #{type} AND `datetime` >= #{datetime}
+        WHERE `type` = #{type} AND `datetime` >= #{datetime} AND `state`= 0
         ORDER BY distance ASC;
     </select>
     <select id="findCommentById" resultType="com.example.orderservice.pojo.Comment">
