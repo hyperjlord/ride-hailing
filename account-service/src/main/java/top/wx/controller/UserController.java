@@ -1,9 +1,11 @@
 package top.wx.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.ApiOperation;
 
 import top.wx.common.JsonResult;
 import top.wx.pojo.Passenger;
@@ -19,11 +21,11 @@ public class UserController {
 	private Userservice userservice;
 		
 	//乘客注册
-	//@PostMapping("/register")
 	@ResponseBody
+	@ApiOperation(value = "乘客注册", notes = "乘客注册")
 	@RequestMapping(value = "/register", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public JsonResult register(@RequestBody Passenger user) {
+	public JsonResult register(@ApiParam(value ="乘客信息" ) @RequestBody Passenger user) {
 
 		//System.out.println("LOADING……");
 		//System.out.println(user.getUserId());
@@ -44,7 +46,7 @@ public class UserController {
 	}
 
 	//司机注册
-	//@PostMapping("/registerDriver")
+	@ApiOperation(value = "司机注册", notes = "司机注册")
 	@ResponseBody
 	@RequestMapping(value = "/registerDriver", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -67,6 +69,7 @@ public class UserController {
 	}
 
 	//乘客登录
+	@ApiOperation(value = "乘客登录", notes = "乘客登录")
 	@ResponseBody
 	@RequestMapping(value = "/login", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -90,6 +93,7 @@ public class UserController {
 	}
 
 	//司机登录
+	@ApiOperation(value = "司机登录", notes = "司机登录")
 	@ResponseBody
 	@RequestMapping(value = "/loginDriver", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -113,6 +117,7 @@ public class UserController {
 	}
 
 	//上传车辆信息
+	@ApiOperation(value = "上传车辆信息", notes = "上传车辆信息")
 	@ResponseBody
 	@RequestMapping(value = "/uploadCar", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -148,6 +153,7 @@ public class UserController {
 	}
 
 	//上传司机头像
+	@ApiOperation(value = "上传司机头像", notes = "上传司机头像")
 	@ResponseBody
 	@RequestMapping(value = "/uploadDriverIcon", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -167,6 +173,7 @@ public class UserController {
 	}
 
 	//上传乘客头像
+	@ApiOperation(value = "上传乘客头像", notes = "上传乘客头像")
 	@ResponseBody
 	@RequestMapping(value = "/uploadPassengerIcon", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -185,6 +192,39 @@ public class UserController {
 		return JsonResult.buildData(passenger);
 	}
 
+	//根据司机id查询司机信息
+	@ApiOperation(value = "根据司机id查询司机信息", notes = "根据司机id查询司机信息")
+	@ResponseBody
+	@RequestMapping(value = "/InquireDriverInfo", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult InquireDriverInfo(@RequestBody Driver driver) {
+		String id = driver.getDriverId();
+
+		//判断用户id和密码不为空
+		if(StringUtils.isBlank(id)) {
+			return JsonResult.errorMsg("账号不能为空");
+		}
+
+		Driver driverReslut=userservice.getDriverInfo(id);
+		return JsonResult.buildData(driverReslut);
+	}
+
+	//根据司机id查询司机信息
+	@ApiOperation(value = "根据乘客id查询乘客信息", notes = "根据乘客id查询乘客信息")
+	@ResponseBody
+	@RequestMapping(value = "/InquirePassengerInfo", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult InquirePassengerInfo(@RequestBody Passenger passenger) {
+		String id = passenger.getUserId();
+
+		//判断用户id和密码不为空
+		if(StringUtils.isBlank(id)) {
+			return JsonResult.errorMsg("账号不能为空");
+		}
+
+		Passenger passengerResult=userservice.getPassengerInfo(id);
+		return JsonResult.buildData(passengerResult);
+	}
 
 	//微信登录
 	/*@PostMapping("/wxLogin")

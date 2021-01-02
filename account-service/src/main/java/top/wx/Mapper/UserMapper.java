@@ -1,5 +1,7 @@
 package top.wx.Mapper;
 
+import java.util.List;
+
 import top.wx.pojo.Passenger;
 import top.wx.pojo.Driver;
 import top.wx.pojo.Car;
@@ -23,5 +25,9 @@ public interface UserMapper {
 	public Passenger queryUserForLogin(String userId, String password);
 
 	public Driver queryDriverForLogin(String driverId, String password);
+
+	public Passenger getPassengerInfo(String userId);
+
+	public Driver getDriverInfo(String driverId);
 
 }
