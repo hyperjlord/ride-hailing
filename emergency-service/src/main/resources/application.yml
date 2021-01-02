@@ -1,14 +1,8 @@
 server:
   port: 8083
-  #servlet:
-  #  context-path: /emergency-service
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+  servlet:
+    context-path: /emergency-service
 spring:
-  application:
-    name: emergency-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://rm-uf6o41v4s83p4lh22125010hm.mysql.rds.aliyuncs.com:3306/soadb?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
@@ -18,3 +12,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  mail:
+    host: smtp.qq.com
+    username: 436096861@qq.com
+    password: wypcthhdhqnzbgig
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true
+          required: true
+
+
