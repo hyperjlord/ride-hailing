@@ -6,7 +6,7 @@ public class Passenger {
 	private String name;
 	private String sex;
 	private Double balance;
-	private String pic_url;
+	private String upic_url;
 
 	public String getUserId() {
 		return user_id;
@@ -36,7 +36,7 @@ public class Passenger {
 	}
 
 	public String getPicUrl() {
-		return pic_url;
+		return upic_url;
 	}
-	public void setPicUrl(String pic_url) { this.pic_url = pic_url; }
+	public void setPicUrl(String upic_url) { this.upic_url = upic_url; }
 }

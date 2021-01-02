@@ -6,7 +6,7 @@ public class Car {
     private String brand;
     private String model;
     private String color;
-    private String pic_url;
+    private String cpic_url;
 
     public String getDriverId() {
         return driver_id;
@@ -25,6 +25,6 @@ public class Car {
     public String getColor(){ return color; }
     public void setColor(String color) { this.color = color; }
 
-    public String getPicUrl() { return pic_url; }
-    public void setPicUrl(String pic_url) { this.pic_url=pic_url; }
+    public String getPicUrl() { return cpic_url; }
+    public void setPicUrl(String cpic_url) { this.cpic_url=cpic_url; }
 }
