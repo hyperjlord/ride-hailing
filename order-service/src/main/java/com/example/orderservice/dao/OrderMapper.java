@@ -17,10 +17,9 @@ public interface OrderMapper {
     /**
      *
      * @param order_id 订单id
-     * @return 订单详情
+     * @return 对应的订单详情
      */
-   OrderDetailVo findOrderDetailByOrderId(@Param("order_id") String order_id);
-
+   OrderDetailVo findOrderDetailByOrderId(String order_id, int type);
 
     /**
      *
@@ -39,13 +38,9 @@ public interface OrderMapper {
      */
    List<OrderDetailVo> findOrderDetailByUserIdAndState(String user_id,int type,int state);
 
-    /**
-     *
-     * @param lon 司机目的地经度
-     * @param lat 司机目的地纬度
-     * @return 距离司机目的地最近的乘客需求订单
-     */
-   List<OrderWithDistanceVO> findNearestOrders(Double lon, Double lat,int type);
+   List<OrderDetailVo> findOrderDetailByDriverIdAndState(String driver_id,int type,int state);
+
+   List<OrderWithDistanceVO> findNearestOrders(Double from_lon,Double from_lat,Double to_lon, Double to_lat,int type);
 
    //根据订单id查找对应的评论
    Comment findCommentById(@Param("order_id") String order_id);
@@ -72,11 +67,7 @@ public interface OrderMapper {
    int saveComment(@Param("order_id")String order_id,@Param("score") Double score,@Param("content") String content);
 
    void deleteByOid(String order_id,int type);
-   /* @Results(value = {
-            @Result(property = "user_id", column = "user_id"),
-            @Result(property = "passengers", column = "user_id",
-                    many = @Many(select="findPassengers")),
-    })*/
+
     @Select("select * from soadb.order")
     List<Order> findAllOrders();
 

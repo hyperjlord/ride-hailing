@@ -10,4 +10,35 @@
     <update id="updateBalance" parameterType="com.example.orderservice.pojo.Driver">
         UPDATE soadb.driver SET balance = #{balance} WHERE driver_id = #{driver_id};
     </update>
+    <insert id="insertLocation">
+        INSERT INTO soadb.d_location(driver_id)
+        VALUES (#{driver_id});
+    </insert>
+    <update id="updateLocation">
+        UPDATE soadb.d_location
+        SET lon=#{lon},lat=#{lat},update_time=#{update_time}
+        WHERE driver_id=#{driver_id};
+    </update>
+    <resultMap id="DriverLocationMap" type="com.example.orderservice.vo.DriverLocationVO">
+        <association property="driver" column="driver_id" select="findDriverById"/>
+    </resultMap>
+    <select id="findLocationById" resultMap="DriverLocationMap">
+        SELECT * FROM soadb.driver NATURAL JOIN soadb.d_location WHERE driver_id=#{driver_id};
+    </select>
+    <resultMap id="DriverNearbyMap" type="com.example.orderservice.vo.DriverNearbyVo">
+        <association property="driver" column="driver_id" select="findDriverById"/>
+    </resultMap>
+    <select id="findNearestDriver" resultMap="DriverNearbyMap">
+        SELECT *,
+               ROUND(
+                           6378.138 * 2 * ASIN(
+                               SQRT(
+                                           POW(SIN( ( #{lat} * PI() / 180 - lat * PI() / 180 ) / 2 ) , 2 )
+                                           +COS( #{lat} * PI() / 180 ) * COS( lat * PI( ) / 180 )*POW( SIN( ( #{lon} * PI() / 180 - lon * PI() / 180 ) / 2 ) , 2 )
+                                   )
+                           ) * 1000
+                   ) AS distance
+        FROM soadb.d_location NATURAL JOIN soadb.driver
+        ORDER BY distance ASC;
+    </select>
 </mapper>

@@ -4,10 +4,7 @@ import com.example.orderservice.dao.OrderMapper;
 import com.example.orderservice.pojo.Order;
 import com.example.orderservice.qo.SetOrderQO;
 import com.example.orderservice.service.OrderService;
-import com.example.orderservice.vo.FinishOrderVo;
-import com.example.orderservice.vo.OrderDetailVo;
-import com.example.orderservice.vo.OrderWithDistanceVO;
-import com.example.orderservice.vo.SetOrderVO;
+import com.example.orderservice.vo.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.ibatis.annotations.Param;
@@ -47,8 +44,8 @@ public class OrderController {
 
     @ApiOperation(value = "根据订单id返回订单详情",notes = "根据订单id返回订单详情")
     @GetMapping("/order/{type}/oid/{order_id}")
-    public List<OrderDetailVo> selectByOid(@PathVariable("order_id") String order_id,@PathVariable("type") String type){
-        return null;
+    public OrderDetailVo selectByOid(@PathVariable("order_id") String order_id,@PathVariable("type") int type){
+        return orderService.findOrderByOid(order_id,type);
     }
 
     @ApiOperation(value = "根据用户id,订单种类返回订单详情",notes = "根据用户id，订单种类返回订单详情")
@@ -70,20 +67,31 @@ public class OrderController {
         return orderService.findOrderByUidAndState(user_id,type,state);
     }
 
+    @ApiOperation(value = "根据司机id,订单种类及订单状态返回订单",notes = "根据用户id，订单种类及订单状态返回订单")
+    @GetMapping("/order/{type}/did/{driver_id}/state/{state}")
+    public List<OrderDetailVo> selectByDIdAndState(@ApiParam(value="订单种类(1为顺风车，2为打车)") @PathVariable("type") int type,
+                                                   @ApiParam(value="司机id") @PathVariable("driver_id") String user_id,
+                                                   @ApiParam(value="订单状态") @PathVariable("state") int state
+    ){
+        return orderService.findOrderByUidAndState(user_id,type,state);
+    }
+
     //返回乘客目的地与司机的目的地最近的订单，按距离从小到大排序
     @ApiOperation(value = "查询乘客目的地与司机的目的地最近的未接单的订单",
-            notes = "返回乘客目的地与司机的目的地最近的未接单的订单，按距离从小到大排序(距离单位是米)"
+            notes = "返回乘客目的地与司机的目的地最近的未接单的订单，按距离(距离为乘客与司机目的地距离加上乘客与司机的起点距离)从小到大排序(距离单位是米)"
     )
     @GetMapping("/order/{type}/nearest")
-    public List<OrderWithDistanceVO> getMatchOrders(@ApiParam(value ="司机所在的经度" ) @RequestParam("lon") Double longitude,
-                                                    @ApiParam(value ="司机所在的纬度" ) @RequestParam("lat") Double latitude,
+    public List<OrderWithDistanceVO> getMatchOrders(@ApiParam(value ="司机出发地的经度" ) @RequestParam("from_lon") Double from_lon,
+                                                    @ApiParam(value ="司机出发地的纬度" ) @RequestParam("from_lat") Double from_lat,
+                                                    @ApiParam(value ="司机目的地的经度" ) @RequestParam("to_lon") Double to_lon,
+                                                    @ApiParam(value ="司机目的地的纬度" ) @RequestParam("to_lat") Double to_lat,
                                                     @PathVariable("type")int type
                                                     ){
-        return  orderService.getMatchOrders(longitude,latitude,type);
+        return  orderService.getMatchOrders(from_lon,from_lat,to_lon,to_lat,type);
     }
 
     @ApiOperation(value = "乘客发布需求订单",notes="乘客发布需求订单,type=1为顺风车，type=2为打车")
-    @PostMapping("/setuporder/1")
+    @PostMapping("/setuporder")
     public SetOrderVO setUpOrder(@RequestBody SetOrderQO setOrderQO) {
         SetOrderVO setOrderVO=new SetOrderVO();
         if(setOrderQO==null){
@@ -124,10 +132,33 @@ public class OrderController {
     }
 
     @ApiOperation(value = "取消订单", notes="根据订单id取消订单，前提是订单还处于未接单（0）或已接单（1）状态")
-    @DeleteMapping("/order/{type}/delete")
-    public void cancerOrder(@RequestParam("order_id") String order_id,
+    @DeleteMapping("/order/{type}/delete/oid/{order_id}")
+    public void cancerOrder(@PathVariable("order_id") String order_id,
                             @PathVariable("type") int type
     ){
         orderService.cancerOrder(order_id,type);
+    }
+
+    @ApiOperation(value = "更新司机位置信息", notes = "更新司机位置信息")
+    @PostMapping("/location/post/driver/{driver_id}/{lon}/{lat}")
+    public void PostDriverLocation(@ApiParam("司机id")@PathVariable String driver_id,
+                                   @ApiParam("司机当前位置经度")@PathVariable Double lon,
+                                   @ApiParam("司机当前位置纬度")@PathVariable Double lat
+    ){
+        orderService.updateDriverLocation(driver_id,lon,lat);
+    }
+
+    @ApiOperation(value = "获取司机位置信息", notes = "根据司机id获取司机的最新位置信息")
+    @GetMapping("/location/get/driver/{driver_id}")
+    public DriverLocationVO GetDriverLocation(@ApiParam("司机id")@PathVariable String driver_id){
+        return orderService.findDriverLocation(driver_id);
+    }
+
+    @ApiOperation(value = "获取附近司机位置信息", notes = "根据一个经纬度坐标获取附近司机的最新位置信息，按距离从小到达排列")
+    @GetMapping("/location/get/driver/near/{lon}/{lat}")
+    public List<DriverNearbyVo> GetNearestDriverLocation(@ApiParam("查询经度")@PathVariable Double lon,
+                                                     @ApiParam("查询纬度") @PathVariable Double lat
+                                                     ){
+        return orderService.findNearestDriver(lon,lat);
     }
 }

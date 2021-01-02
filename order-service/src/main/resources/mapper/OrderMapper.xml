@@ -11,7 +11,7 @@
         select * from soadb.order natural join soadb.comment;
     </select>
     <select id="findOrderDetailByOrderId" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE order_id = #{order_id};
+        SELECT * FROM soadb.order WHERE order_id = #{order_id} and `type` = #{type};
     </select>
     <select id="findOrderDetailByUserId" resultMap="OrderDetailMap">
         SELECT * FROM soadb.order WHERE user_id = #{user_id} AND `type` = #{type};
@@ -19,16 +19,29 @@
     <select id="findOrderDetailByUserIdAndState" resultMap="OrderDetailMap">
         SELECT * FROM soadb.order WHERE user_id = #{user_id} AND `type` = #{type} AND `state` = #{state};
     </select>
+    <select id="findOrderDetailByDriverIdAndState" resultMap="OrderDetailMap">
+        SELECT * FROM soadb.order WHERE driver_id = #{driver_id} AND `type` = #{type} AND `state` = #{state};
+    </select>
     <select id="findNearestOrders" resultType="com.example.orderservice.vo.OrderWithDistanceVO">
         SELECT *,
+               (
                ROUND(
                   6378.138 * 2 * ASIN(
                     SQRT(
-                        POW(SIN( ( #{lat} * PI() / 180 - to_lat * PI() / 180 ) / 2 ) , 2 )
-                        +COS( #{lat} * PI() / 180 ) * COS( to_lat * PI( ) / 180 )*POW( SIN( ( #{lon} * PI() / 180 - to_lon * PI() / 180 ) / 2 ) , 2 )
+                        POW(SIN( ( #{to_lat} * PI() / 180 - to_lat * PI() / 180 ) / 2 ) , 2 )
+                        +COS( #{to_lat} * PI() / 180 ) * COS( to_lat * PI( ) / 180 )*POW( SIN( ( #{to_lon} * PI() / 180 - to_lon * PI() / 180 ) / 2 ) , 2 )
                        )
                    ) * 1000
-               ) AS distance
+               ) +
+               ROUND(
+                           6378.138 * 2 * ASIN(
+                               SQRT(
+                                           POW(SIN( ( #{from_lat} * PI() / 180 - from_lat * PI() / 180 ) / 2 ) , 2 )
+                                           +COS( #{from_lat} * PI() / 180 ) * COS( from_lat * PI( ) / 180 )*POW( SIN( ( #{from_lon} * PI() / 180 - from_lon * PI() / 180 ) / 2 ) , 2 )
+                                   )
+                           ) * 1000
+                   )
+                )AS distance
         FROM soadb.order
         WHERE `type` = #{type}
         ORDER BY distance ASC;

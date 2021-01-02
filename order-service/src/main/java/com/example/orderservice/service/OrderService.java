@@ -7,9 +7,7 @@ import com.example.orderservice.pojo.Driver;
 import com.example.orderservice.pojo.Order;
 import com.example.orderservice.pojo.Passenger;
 import com.example.orderservice.qo.SetOrderQO;
-import com.example.orderservice.vo.FinishOrderVo;
-import com.example.orderservice.vo.OrderDetailVo;
-import com.example.orderservice.vo.OrderWithDistanceVO;
+import com.example.orderservice.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,6 +32,10 @@ public class OrderService {
         return orderMapper.findAllDetail();
     }
 
+    public OrderDetailVo findOrderByOid(String order_id,int type){
+        return orderMapper.findOrderDetailByOrderId(order_id,type);
+    }
+
     public List<OrderDetailVo> findOrderByUid(String user_id,int type){
         return orderMapper.findOrderDetailByUserId(user_id,type);
     }
@@ -42,10 +44,13 @@ public class OrderService {
         return  orderMapper.findOrderDetailByUserIdAndState(user_id,type,state);
     }
 
-    public List<OrderWithDistanceVO> getMatchOrders(Double lon, Double lat,int type) {
-        return orderMapper.findNearestOrders(lon, lat, type);
+    public List<OrderDetailVo> findOrderByDidAndState(String driver_id,int type,int state){
+        return orderMapper.findOrderDetailByDriverIdAndState(driver_id,type,state);
     }
 
+    public List<OrderWithDistanceVO> getMatchOrders(Double from_lon,Double from_lat,Double to_lon, Double to_lat,int type) {
+        return orderMapper.findNearestOrders(from_lon, from_lat, to_lon, to_lat, type);
+    }
     //创建新订单
     public void setNewOrder(SetOrderQO setOrderQO) {
         //用来构建订单
@@ -122,5 +127,25 @@ public class OrderService {
         //只能取消未接单(state=0)和已接单(state=1)的订单
         assert(order_state==0||order_state==1);
         orderMapper.deleteByOid(order_id,type);
+    }
+
+    public void updateDriverLocation(String driver_id,Double lon,Double lat){
+        Driver driver=driverMapper.findDriverById(driver_id);
+        //先判断司机id是否已在location表里存在，如果不是则先插入一条数据，然后才可以执行更新
+        if(driver.getDriver_id()==null){
+            driverMapper.insertLocation(driver_id);
+        }
+        //获取当前系统日期时间
+        Date current_time=new Date();
+        //更新位置信息
+        driverMapper.updateLocation(driver_id,lon,lat,current_time);
+    }
+
+    public DriverLocationVO findDriverLocation(String driver_id){
+        return driverMapper.findLocationById(driver_id);
+    }
+
+    public List<DriverNearbyVo> findNearestDriver(Double lon, Double lat){
+        return driverMapper.findNearestDriver(lon,lat);
     }
 }
