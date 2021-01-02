@@ -1,5 +1,6 @@
 package top.wx.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,11 +21,11 @@ public class UserController {
 	private Userservice userservice;
 		
 	//乘客注册
-	@ApiOperation(value = "乘客注册", notes = "乘客注册")
 	@ResponseBody
+	@ApiOperation(value = "乘客注册", notes = "乘客注册")
 	@RequestMapping(value = "/register", headers = {
 			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public JsonResult register(@RequestBody Passenger user) {
+	public JsonResult register(@ApiParam(value ="乘客信息" ) @RequestBody Passenger user) {
 
 		//System.out.println("LOADING……");
 		//System.out.println(user.getUserId());
