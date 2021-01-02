@@ -1,0 +1,54 @@
+version: "3"
+services:
+    security:
+        build:
+            context: ./security-service/
+            dockerfile: Dockerfile.security.dev
+        ports:
+            - 8084:8084
+    order:
+        build:
+            context: ./order-service/
+            dockerfile: Dockerfile.order.dev
+        ports:
+            - 8763:8763
+    favorite:
+        build:
+            context: ./favorite-service/
+            dockerfile: Dockerfile.favorite.dev
+        ports:
+            - 8085:8085
+    account:
+        build:
+            context: ./account-service/
+            dockerfile: Dockerfile.account.dev
+        ports:
+            - 8762:8762
+    emergency:
+        build:
+            context: ./emergency-service/
+            dockerfile: Dockerfile.emergency.dev
+        ports:
+            - 8083:8083
+    eureka-server:
+        build:
+            context: ./eureka-server/
+            dockerfile: Dockerfile.eureka-server.dev
+        ports:
+            - 8761:8761
+    eureka-zuul:
+        build:
+            context: ./eureka-zuul/
+            dockerfile: Dockerfile.eureka-zuul.dev
+        ports:
+            - 5000:5000
+    
+
+
+
+        
+
+
+            
+
+
