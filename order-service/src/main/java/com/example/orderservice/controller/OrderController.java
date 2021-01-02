@@ -70,24 +70,35 @@ public class OrderController {
     @ApiOperation(value = "根据司机id,订单种类及订单状态返回订单",notes = "根据用户id，订单种类及订单状态返回订单")
     @GetMapping("/order/{type}/did/{driver_id}/state/{state}")
     public List<OrderDetailVo> selectByDIdAndState(@ApiParam(value="订单种类(1为顺风车，2为打车)") @PathVariable("type") int type,
-                                                   @ApiParam(value="司机id") @PathVariable("driver_id") String user_id,
+                                                   @ApiParam(value="司机id") @PathVariable("driver_id") String driver_id,
                                                    @ApiParam(value="订单状态") @PathVariable("state") int state
     ){
-        return orderService.findOrderByUidAndState(user_id,type,state);
+        return orderService.findOrderByDidAndState(driver_id,type,state);
     }
 
     //返回乘客目的地与司机的目的地最近的订单，按距离从小到大排序
-    @ApiOperation(value = "查询乘客目的地与司机的目的地最近的未接单的订单",
+    @ApiOperation(value = "查询乘客出发地与司机当前位置最近的未接单的订单(用于打车)",
             notes = "返回乘客目的地与司机的目的地最近的未接单的订单，按距离(距离为乘客与司机目的地距离加上乘客与司机的起点距离)从小到大排序(距离单位是米)"
     )
-    @GetMapping("/order/{type}/nearest")
+    @GetMapping("/order/2/nearest")
+    public List<OrderWithDistanceVO> getNearestOrders(@ApiParam(value ="司机出发地的经度" ) @RequestParam("lon") Double lon,
+                                                    @ApiParam(value ="司机出发地的纬度" ) @RequestParam("lat") Double lat
+                                                    ){
+        return  orderService.getNearestOrders(lon,lat);
+    }
+
+    @ApiOperation(value = "查询乘客与司机起点距离加终点距离最近的未接单的订单（用于顺风车）",
+            notes = "返回乘客与司机起点距离加终点距离最近的未接单的订单，按距离(距离为乘客与司机目的地距离加上乘客与司机的起点距离)从小到大排序(距离单位是米)"
+    )
+    @GetMapping("/order/1/nearest")
     public List<OrderWithDistanceVO> getMatchOrders(@ApiParam(value ="司机出发地的经度" ) @RequestParam("from_lon") Double from_lon,
                                                     @ApiParam(value ="司机出发地的纬度" ) @RequestParam("from_lat") Double from_lat,
                                                     @ApiParam(value ="司机目的地的经度" ) @RequestParam("to_lon") Double to_lon,
                                                     @ApiParam(value ="司机目的地的纬度" ) @RequestParam("to_lat") Double to_lat,
-                                                    @PathVariable("type")int type
-                                                    ){
-        return  orderService.getMatchOrders(from_lon,from_lat,to_lon,to_lat,type);
+                                                    @ApiParam(value="司机的出发日期时间") @RequestParam("datetime") Date datetime
+    ){
+        int type=1;
+        return  orderService.getMatchOrders(from_lon,from_lat,to_lon,to_lat,type,datetime);
     }
 
     @ApiOperation(value = "乘客发布需求订单",notes="乘客发布需求订单,type=1为顺风车，type=2为打车")

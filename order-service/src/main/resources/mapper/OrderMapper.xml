@@ -27,6 +27,21 @@
     </select>
     <select id="findNearestOrders" resultType="com.example.orderservice.vo.OrderWithDistanceVO">
         SELECT *,
+                ROUND(
+                    6378.138 * 2 * ASIN(
+                        SQRT(
+                            POW(SIN( ( #{lat} * PI() / 180 - from_lat * PI() / 180 ) / 2 ) , 2 )
+                            +COS( #{lat} * PI() / 180 ) * COS( from_lat * PI( ) / 180 )*POW( SIN( ( #{lon} * PI() / 180 - from_lon * PI() / 180 ) / 2 ) , 2 )
+                            )
+                        ) * 1000
+                    )
+                AS distance
+        FROM soadb.order
+        WHERE `type` = 2 AND `datetime` >= #{current_time}
+        ORDER BY distance ASC;
+    </select>
+    <select id="findMatchOrders" resultType="com.example.orderservice.vo.OrderWithDistanceVO">
+        SELECT *,
                (
                ROUND(
                   6378.138 * 2 * ASIN(
@@ -46,7 +61,7 @@
                    )
                 )AS distance
         FROM soadb.order
-        WHERE `type` = #{type}
+        WHERE `type` = #{type} AND `datetime` >= #{datetime}
         ORDER BY distance ASC;
     </select>
     <select id="findCommentById" resultType="com.example.orderservice.pojo.Comment">
@@ -64,7 +79,7 @@
     <select id="findDriverDetailById" resultType="com.example.orderservice.dto.DriverDetailDto">
         SELECT * FROM soadb.driver NATURAL JOIN soadb.car WHERE driver_id = #{driver_id};
     </select>
-    <update id="takeOrder" parameterType="java.lang.String">
+    <update id="takeOrder" >
         UPDATE soadb.order SET state=1,driver_id=#{driver_id},taken_time=#{taken_time} WHERE order_id = #{order_id};
     </update>
     <update id="pickUp">

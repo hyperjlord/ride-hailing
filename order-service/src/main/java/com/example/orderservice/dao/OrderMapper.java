@@ -43,7 +43,9 @@ public interface OrderMapper {
 
    List<OrderDetailVo> findOrderDetailByDriverIdAndState(String driver_id,int type,int state);
 
-   List<OrderWithDistanceVO> findNearestOrders(Double from_lon,Double from_lat,Double to_lon, Double to_lat,int type);
+   List<OrderWithDistanceVO> findNearestOrders(Double lon,Double lat,Date current_time);
+
+   List<OrderWithDistanceVO> findMatchOrders(Double from_lon,Double from_lat,Double to_lon, Double to_lat,int type,Date datetime);
 
    //根据订单id查找对应的评论
    Comment findCommentById(@Param("order_id") String order_id);
@@ -77,23 +79,6 @@ public interface OrderMapper {
     @Select("select * from soadb.order where order_id = #{order_id}")
     Order findOrderById(String order_id);
 
-    @Select("SELECT" +
-            "*, "+
-            "    ROUND(" +
-            "        6378.138 * 2 * ASIN(" +
-            "            SQRT(" +
-            "                POW(" +
-            "                    SIN( ( #{lat} * PI() / 180 - to_lat * PI() / 180 ) / 2 ) , 2 )" +
-            "                +" +
-            "                COS( #{lat} * PI( ) / 180 ) * COS( to_lat * PI( ) / 180 )" +
-            "                * POW( SIN( ( #{lon} * PI() / 180 - to_lon * PI() / 180 ) / 2 ) , 2 )" +
-            "            )" +
-            "        ) * 1000" +
-            "    ) AS distance " +
-            "FROM soadb.order " +
-            "ORDER BY distance ASC " +
-            "LIMIT 20;")
-    List<Order> findMatchOrders(@Param("lon") Double lon,@Param("lat") Double lat);
     @Insert("INSERT INTO soadb.order(order_id,type,state,user_id,passenger_num,datetime," +
             "from_name,to_name,from_lon,from_lat,to_lon,to_lat,driver_id,description) " +
             "VALUES (#{order_id},#{type},#{state},#{user_id},#{passenger_num},#{datetime}," +

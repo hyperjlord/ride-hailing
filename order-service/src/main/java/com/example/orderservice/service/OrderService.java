@@ -52,8 +52,14 @@ public class OrderService {
         return orderMapper.findOrderDetailByDriverIdAndState(driver_id,type,state);
     }
 
-    public List<OrderWithDistanceVO> getMatchOrders(Double from_lon,Double from_lat,Double to_lon, Double to_lat,int type) {
-        return orderMapper.findNearestOrders(from_lon, from_lat, to_lon, to_lat, type);
+    public List<OrderWithDistanceVO> getNearestOrders(Double lon,Double lat){
+        //获取当前时间
+        Date current_time=new Date();
+        return orderMapper.findNearestOrders(lon,lat,current_time);
+    }
+
+    public List<OrderWithDistanceVO> getMatchOrders(Double from_lon, Double from_lat, Double to_lon, Double to_lat, int type,Date datetime) {
+        return orderMapper.findMatchOrders(from_lon, from_lat, to_lon, to_lat, type, datetime);
     }
     //创建新订单
     public void setNewOrder(SetOrderQO setOrderQO) {

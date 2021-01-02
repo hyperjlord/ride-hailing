@@ -4,6 +4,7 @@ import com.example.orderservice.pojo.Car;
 import com.example.orderservice.pojo.Comment;
 import com.example.orderservice.pojo.Passenger;
 import com.example.orderservice.dto.DriverDetailDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
@@ -16,6 +17,7 @@ public class OrderDetailVo {
     public Passenger passenger;
     public int passenger_num;
     public Double price;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     public Date datetime;
     public String from_name;
     public String to_name;
@@ -26,5 +28,6 @@ public class OrderDetailVo {
     public DriverDetailDto driver;
     public String description;
     public Comment comment;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     public Date taken_time;
 }
