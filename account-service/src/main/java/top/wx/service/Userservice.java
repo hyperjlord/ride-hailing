@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import top.wx.Mapper.UserMapper;
 import top.wx.pojo.Passenger;
@@ -49,5 +50,13 @@ public class Userservice {
 
 	public Driver queryDriverForLogin(String driverId, String password) {
 		return userMapper.queryDriverForLogin(driverId,password);
+	}
+
+	public Passenger getPassengerInfo(String userId){
+		return userMapper.getPassengerInfo(userId);
+	}
+
+	public Driver  getDriverInfo(String driverId){
+		return userMapper.getDriverInfo(driverId);
 	}
 }

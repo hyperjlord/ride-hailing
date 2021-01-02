@@ -192,6 +192,39 @@ public class UserController {
 		return JsonResult.buildData(passenger);
 	}
 
+	//根据司机id查询司机信息
+	@ApiOperation(value = "根据司机id查询司机信息", notes = "根据司机id查询司机信息")
+	@ResponseBody
+	@RequestMapping(value = "/InquireDriverInfo", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult InquireDriverInfo(@RequestBody Driver driver) {
+		String id = driver.getDriverId();
+
+		//判断用户id和密码不为空
+		if(StringUtils.isBlank(id)) {
+			return JsonResult.errorMsg("账号不能为空");
+		}
+
+		Driver driverReslut=userservice.getDriverInfo(id);
+		return JsonResult.buildData(driverReslut);
+	}
+
+	//根据司机id查询司机信息
+	@ApiOperation(value = "根据乘客id查询乘客信息", notes = "根据乘客id查询乘客信息")
+	@ResponseBody
+	@RequestMapping(value = "/InquirePassengerInfo", headers = {
+			"content-type=application/json" }, consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public JsonResult InquirePassengerInfo(@RequestBody Passenger passenger) {
+		String id = passenger.getUserId();
+
+		//判断用户id和密码不为空
+		if(StringUtils.isBlank(id)) {
+			return JsonResult.errorMsg("账号不能为空");
+		}
+
+		Passenger passengerResult=userservice.getPassengerInfo(id);
+		return JsonResult.buildData(passengerResult);
+	}
 
 	//微信登录
 	/*@PostMapping("/wxLogin")

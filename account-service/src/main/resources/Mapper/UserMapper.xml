@@ -47,5 +47,12 @@
     <select id="queryDriverForLogin" resultType="top.wx.pojo.Driver">
         SELECT * FROM driver where driver_id=#{param1} and password=#{param2}
     </select>
-  
+
+    <select id="getDriverInfo" resultType="top.wx.pojo.Driver">
+        SELECT * FROM driver where driver_id=#{param1}
+    </select>
+
+    <select id="getPassengerInfo" resultType="top.wx.pojo.Passenger">
+        SELECT * FROM passenger where user_id=#{param1}
+    </select>
 </mapper>

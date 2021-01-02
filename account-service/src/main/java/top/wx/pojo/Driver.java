@@ -9,7 +9,7 @@ public class Driver {
     private String id_card;
     private String drive_age;
     private Double balance;
-    private String pic_url;
+    private String dpic_url;
 
     public String getDriverId() {
         return driver_id;
@@ -56,7 +56,7 @@ public class Driver {
     }
 
     public String getPicUrl() {
-        return pic_url;
+        return dpic_url;
     }
-    public void setPicUrl(String pic_url) { this.pic_url = pic_url; }
+    public void setPicUrl(String dpic_url) { this.dpic_url = dpic_url; }
 }
