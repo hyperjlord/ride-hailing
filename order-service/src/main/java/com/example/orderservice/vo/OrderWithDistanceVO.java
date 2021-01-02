@@ -1,5 +1,6 @@
 package com.example.orderservice.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ public class OrderWithDistanceVO {
     public String user_id;
     public int passenger_num;
     public Double price;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     public Date datetime;
     public String from_name;
     public String to_name;
@@ -21,5 +23,6 @@ public class OrderWithDistanceVO {
     public String driver_id;
     public String description;
     public Double distance;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     public Date taken_time;
 }
