@@ -26,4 +26,5 @@ public class OrderDetailVo {
     public DriverDetailDto driver;
     public String description;
     public Comment comment;
+    public Date taken_time;
 }

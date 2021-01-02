@@ -21,4 +21,5 @@ public class OrderWithDistanceVO {
     public String driver_id;
     public String description;
     public Double distance;
+    public Date taken_time;
 }

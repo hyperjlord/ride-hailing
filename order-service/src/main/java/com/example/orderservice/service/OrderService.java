@@ -28,8 +28,12 @@ public class OrderService {
         return orderMapper.findAllOrders();
     }
 
-    public List<OrderDetailVo>selectAllDetail(){
+    public List<OrderDetailVo> selectAllDetail(){
         return orderMapper.findAllDetail();
+    }
+
+    public List<OrderDetailVo> findAllByUidAndState(String user_id,int state){
+        return orderMapper.findAllOrderDetailByUidAndState(user_id,state);
     }
 
     public OrderDetailVo findOrderByOid(String order_id,int type){
@@ -75,7 +79,8 @@ public class OrderService {
 
     //司机接单
     public int takeOrder(String order_id,String driver_id){
-        return orderMapper.takeOrder(order_id,driver_id);
+        Date taken_time=new Date();
+        return orderMapper.takeOrder(order_id,driver_id,taken_time);
     }
 
     //司机接人

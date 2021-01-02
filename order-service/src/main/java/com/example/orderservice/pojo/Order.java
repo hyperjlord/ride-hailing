@@ -27,4 +27,5 @@ public class Order{
     public Double to_lon;
     public String driver_id;
     public String description;
+    public Date taken_time;
 }

@@ -10,6 +10,9 @@
     <select id="findAllDetail" resultMap="OrderDetailMap">
         select * from soadb.order natural join soadb.comment;
     </select>
+    <select id="findAllOrderDetailByUidAndState" resultMap="OrderDetailMap">
+        SELECT * FROM soadb.order WHERE  user_id = #{user_id} AND  `state` = #{state};
+    </select>
     <select id="findOrderDetailByOrderId" resultMap="OrderDetailMap">
         SELECT * FROM soadb.order WHERE order_id = #{order_id} and `type` = #{type};
     </select>
@@ -62,7 +65,7 @@
         SELECT * FROM soadb.driver NATURAL JOIN soadb.car WHERE driver_id = #{driver_id};
     </select>
     <update id="takeOrder" parameterType="java.lang.String">
-        UPDATE soadb.order SET state=1,driver_id=#{driver_id} WHERE order_id = #{order_id};
+        UPDATE soadb.order SET state=1,driver_id=#{driver_id},taken_time=#{taken_time} WHERE order_id = #{order_id};
     </update>
     <update id="pickUp">
         UPDATE soadb.order SET state=2 WHERE order_id = #{order_id};
