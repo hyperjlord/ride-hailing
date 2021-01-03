@@ -1,5 +1,6 @@
 package com.example.orderservice.qo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ public class SetOrderQO {
     public int type;
     public int passenger_num;
     public Double price;
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     public Date datetime;
     public String from_name;
     public String to_name;
