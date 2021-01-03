@@ -6,6 +6,7 @@
     <modules>
         <module>feign-client</module>
         <module>eureka-zuul</module>
+        <module>admin-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

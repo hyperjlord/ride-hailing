@@ -6,6 +6,11 @@ spring:
 eureka:
   instance:
     hostname: localhost
+  server:
+    # 关闭保护机制，默认true
+    enable-self-preservation: false
+    # 剔除失效服务间隔，默认60000(毫秒)
+    eviction-interval-timer-in-ms: 5000
   client:
     registerWithEureka: false
     fetchRegistry: false

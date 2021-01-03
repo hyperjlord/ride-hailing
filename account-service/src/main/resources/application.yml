@@ -19,6 +19,12 @@ spring:
 mybatis:
   mapper-locations: classpath:Mapper/*Mapper.xml
   type-aliases-package: top.wx.pojo
-
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 #showSql
