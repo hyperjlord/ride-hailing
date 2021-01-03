@@ -36,10 +36,16 @@ public class OrderController {
         return orderService.selectAll();
     }
 
-    @ApiOperation(value = "查询所有订单详情",notes="根据用户id和订单状态返回订单详情（顺风车打车订单都有）")
+    @ApiOperation(value = "查询所有状态的订单详情",notes="根据用户id和订单状态返回订单详情（顺风车打车订单都有）")
     @GetMapping("/order/all/uid/{user_id}/state/{state}")
     public List<OrderDetailVo> selectAllByUidAndState(@PathVariable("user_id")String user_id,@PathVariable("state") int state){
         return orderService.findAllByUidAndState(user_id,state);
+    }
+
+    @ApiOperation(value = "查询所有状态订单详情",notes="根据司机id和订单状态返回订单详情（顺风车打车订单都有）")
+    @GetMapping("/order/all/did/{driver_id}/state/{state}")
+    public List<OrderDetailVo> selectAllByDidAndState(@PathVariable("driver_id")String driver_id,@PathVariable("state") int state){
+        return orderService.findAllByDidAndState(driver_id,state);
     }
 
     @ApiOperation(value = "根据订单id返回订单详情",notes = "根据订单id返回订单详情")

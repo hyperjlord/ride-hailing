@@ -36,6 +36,10 @@ public class OrderService {
         return orderMapper.findAllOrderDetailByUidAndState(user_id,state);
     }
 
+    public List<OrderDetailVo> findAllByDidAndState(String driver_id,int state){
+        return orderMapper.findAllOrderDetailByDidAndState(driver_id,state);
+    }
+
     public OrderDetailVo findOrderByOid(String order_id,int type){
         return orderMapper.findOrderDetailByOrderId(order_id,type);
     }

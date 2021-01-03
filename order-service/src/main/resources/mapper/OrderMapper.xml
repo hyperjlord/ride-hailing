@@ -13,6 +13,9 @@
     <select id="findAllOrderDetailByUidAndState" resultMap="OrderDetailMap">
         SELECT * FROM soadb.order WHERE  user_id = #{user_id} AND  `state` = #{state};
     </select>
+    <select id="findAllOrderDetailByDidAndState" resultMap="OrderDetailMap">
+        SELECT * FROM soadb.order WHERE  driver_id = #{driver_id} AND  `state` = #{state};
+    </select>
     <select id="findOrderDetailByOrderId" resultMap="OrderDetailMap">
         SELECT * FROM soadb.order WHERE order_id = #{order_id} and `type` = #{type};
     </select>

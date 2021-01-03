@@ -17,6 +17,8 @@ public interface OrderMapper {
 
    List<OrderDetailVo> findAllOrderDetailByUidAndState(String user_id,int state);
 
+   List<OrderDetailVo> findAllOrderDetailByDidAndState(String driver_id,int state);
+
     /**
      *
      * @param order_id 订单id
