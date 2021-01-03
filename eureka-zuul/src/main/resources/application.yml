@@ -18,6 +18,9 @@ zuul:
     account-service:
       path: /accountservice/**
       serviceId: account-service
+    admin-server:
+      path: /adminserver/**
+      serviceId: admin-server
   #是否开启重试功能
   retryable: true
 ribbon:
