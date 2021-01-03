@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,11 +33,11 @@ public class SendEmailController {
     private ContactService contactService;
 
     @ApiOperation(value = "乘客使用紧急联系服务", notes = "乘客点击按钮使用紧急联系服务")
-    @RequestMapping(value = "/simpleEmail", method = {RequestMethod.GET})
-    public RspResult sendSimpleEmail(HttpServletRequest request) {
+    @RequestMapping(value = "/simpleEmail/{userId}", method = {RequestMethod.GET})
+    public RspResult sendSimpleEmail(HttpServletRequest request, @PathVariable("userId") String userId) {
 
         RspResult rspResult = new RspResult();
-        List<Contact> contactList = contactService.findAll();
+        List<Contact> contactList = contactService.findAllByUserId(userId);
         System.out.println(contactList.size());
 
         contactList.forEach(contact -> {

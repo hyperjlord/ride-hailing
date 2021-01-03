@@ -138,4 +138,9 @@ public class ContactService implements SecurityDao {
     public <S extends Contact> boolean exists(Example<S> example) {
         return false;
     }
+
+    @Override
+    public List<Contact> findAllByUserId(String userId) {
+        return securityDao.findAllByUserId(userId);
+    }
 }
