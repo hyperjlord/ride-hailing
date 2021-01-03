@@ -29,15 +29,15 @@
     </insert>
 
     <insert id="saveCar">
-		insert into car(driver_id,car_number,brand,model,color,cpic_url) values(#{driver_id},#{car_number},#{brand},#{model},#{color},#{pic_url})
+		insert into car(driver_id,car_number,brand,model,color,cpic_url) values(#{driver_id},#{car_number},#{brand},#{model},#{color},#{cpic_url})
     </insert>
 
     <insert id="saveDriverPicUrl">
-        UPDATE driver SET dpic_url = #{pic_url} WHERE driver_id = #{driver_id}
+        UPDATE driver SET dpic_url = #{dpic_url} WHERE driver_id = #{driver_id}
     </insert>
 
     <insert id="savePassengerPicUrl">
-        UPDATE passenger SET upic_url = #{pic_url} WHERE user_id = #{user_id}
+        UPDATE passenger SET upic_url = #{upic_url} WHERE user_id = #{user_id}
     </insert>
 
     <select id="queryUserForLogin" resultType="top.wx.pojo.Passenger">
