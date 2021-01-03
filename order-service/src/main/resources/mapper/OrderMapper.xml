@@ -25,7 +25,13 @@
     <select id="findOrderDetailByDriverIdAndState" resultMap="OrderDetailMap">
         SELECT * FROM soadb.order WHERE driver_id = #{driver_id} AND `type` = #{type} AND `state` = #{state};
     </select>
-    <select id="findNearestOrders" resultType="com.example.orderservice.vo.OrderWithDistanceVO">
+    <resultMap id="OrderWithDistanceVoMap" type="com.example.orderservice.vo.OrderWithDistanceVO">
+        <id property="order_id" column="order_id"/>
+        <association property="comment" column="order_id" javaType="com.example.orderservice.pojo.Comment" select="findCommentById"/>
+        <association property="passenger" column="user_id" javaType="com.example.orderservice.pojo.Passenger" select="findPassengerById"/>
+        <association property="driver" column="driver_id" javaType="com.example.orderservice.dto.DriverDetailDto" select="findDriverDetailById"/>
+    </resultMap>
+    <select id="findNearestOrders" resultMap="OrderWithDistanceVoMap">
         SELECT *,
                 ROUND(
                     6378.138 * 2 * ASIN(
@@ -40,7 +46,7 @@
         WHERE `type` = 2 AND `state`=0
         ORDER BY distance ASC;
     </select>
-    <select id="findMatchOrders" resultType="com.example.orderservice.vo.OrderWithDistanceVO">
+    <select id="findMatchOrders" resultMap="OrderWithDistanceVoMap">
         SELECT *,
                (
                ROUND(
