@@ -109,8 +109,11 @@ public class OrderService {
             return finishOrderVo;
         }
         //根据订单id获取用户id，根据订单id获取司机id
-        String u_id = passengerMapper.findPassengerFromOrder(order_id);
-        String d_id = driverMapper.findDriverFromOrder(order_id);
+        //String u_id = passengerMapper.findPassengerFromOrder(order_id);
+        String u_id=order.getUser_id();
+        String d_id=order.getDriver_id();
+        //String d_id = driverMapper.findDriverFromOrder(order_id);
+
         //根据用户id获取用户对象，根据司机id获取司机对象
         Passenger passenger= passengerMapper.findPassengerById(u_id);
         Driver driver = driverMapper.findDriverById(d_id);
