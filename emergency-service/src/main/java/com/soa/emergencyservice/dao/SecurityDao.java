@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SecurityDao extends JpaRepository<Contact, Integer> {
+    List<Contact> findAllByUserId(String userId);
     List<Contact> findAll();
 }
