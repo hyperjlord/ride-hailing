@@ -104,7 +104,7 @@ public class OrderService {
         FinishOrderVo finishOrderVo=new FinishOrderVo();
         //根据订单id获取订单对象
         Order order= orderMapper.findOrderById(order_id);
-        if(order.getType()!=2){
+        if(order.getState()!=2){
             finishOrderVo.setInfo("该请求不合法，因为该订单目前状态不是”进行中(state=2)“");
             return finishOrderVo;
         }
