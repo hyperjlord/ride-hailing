@@ -23,7 +23,11 @@ spring:
         starttls:
           enable: true
           required: true
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: 123
+    password: 123
 management:
   endpoints:
     web:
