@@ -66,10 +66,11 @@ public class OrderService {
         return orderMapper.findMatchOrders(from_lon, from_lat, to_lon, to_lat, type, datetime);
     }
     //创建新订单
-    public void setNewOrder(SetOrderQO setOrderQO) {
+    public String setNewOrder(SetOrderQO setOrderQO) {
         //用来构建订单
         Order order=new Order();
-        order.setOrder_id(UUID.randomUUID().toString());
+        String order_id=UUID.randomUUID().toString();
+        order.setOrder_id(order_id);
         order.setUser_id(setOrderQO.getUser_id());
         order.setType(setOrderQO.getType());
         order.setState(0);
@@ -85,6 +86,7 @@ public class OrderService {
         order.setState(0);
         order.setDriver_id(null);
         orderMapper.saveOrder(order);
+        return order_id;
     }
 
     //司机接单

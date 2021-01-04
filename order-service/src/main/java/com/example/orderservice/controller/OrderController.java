@@ -115,8 +115,9 @@ public class OrderController {
             setOrderVO.setErrorInfo("请求失败");
             return setOrderVO;
         }
-        orderService.setNewOrder(setOrderQO);
+        String order_id=orderService.setNewOrder(setOrderQO);
         setOrderVO.setErrorInfo("请求成功");
+        setOrderVO.setOrder_id(order_id);
         return setOrderVO;
     }
 
