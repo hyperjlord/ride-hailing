@@ -81,9 +81,9 @@ public interface OrderMapper {
     @Select("select * from soadb.order where order_id = #{order_id}")
     Order findOrderById(String order_id);
 
-    @Insert("INSERT INTO soadb.order(order_id,type,state,user_id,passenger_num,datetime," +
+    @Insert("INSERT INTO soadb.order(order_id,type,state,user_id,passenger_num,price,datetime," +
             "from_name,to_name,from_lon,from_lat,to_lon,to_lat,driver_id,description) " +
-            "VALUES (#{order_id},#{type},#{state},#{user_id},#{passenger_num},#{datetime}," +
+            "VALUES (#{order_id},#{type},#{state},#{user_id},#{passenger_num},#{price},#{datetime}," +
             "#{from_name},#{to_name},#{from_lon},#{from_lat},#{to_lon},#{to_lat},#{driver_id},#{description})")
     void saveOrder(Order order);
 }
