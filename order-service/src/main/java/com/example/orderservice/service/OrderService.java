@@ -114,11 +114,20 @@ public class OrderService {
         String d_id=order.getDriver_id();
         //String d_id = driverMapper.findDriverFromOrder(order_id);
 
-        //根据用户id获取用户对象，根据司机id获取司机对象
+        //根据用户id获取用户对象
         Passenger passenger= passengerMapper.findPassengerById(u_id);
+        if(passenger==null){
+            finishOrderVo.setInfo("没获取到对应乘客对象");
+            return finishOrderVo;
+        }
+        //根据司机id获取司机对象
         Driver driver = driverMapper.findDriverById(d_id);
         if(passenger.getBalance()<order.getPrice()){
             finishOrderVo.setInfo("用户余额不足无法完成订单");
+            return finishOrderVo;
+        }
+        if(driver==null){
+            finishOrderVo.setInfo("没获取到对应司机对象");
             return finishOrderVo;
         }
         //根据订单金额扣除用户余额，相应地司机余额对应增加

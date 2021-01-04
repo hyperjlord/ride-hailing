@@ -1,7 +1,5 @@
 server:
   port: 8083
-  servlet:
-    context-path: /emergency-service
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -24,10 +22,10 @@ spring:
           enable: true
           required: true
   rabbitmq:
-    host: localhost
+    host: 47.115.33.176
     port: 5672
-    username: 123
-    password: 123
+    username: guest
+    password: guest
 management:
   endpoints:
     web:
