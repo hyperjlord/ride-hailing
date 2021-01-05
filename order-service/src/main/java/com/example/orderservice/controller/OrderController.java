@@ -1,6 +1,7 @@
 package com.example.orderservice.controller;
 
 import com.example.orderservice.dao.OrderMapper;
+import com.example.orderservice.pojo.Comment;
 import com.example.orderservice.pojo.Order;
 import com.example.orderservice.qo.SetOrderQO;
 import com.example.orderservice.service.OrderService;
@@ -178,5 +179,10 @@ public class OrderController {
                                                      @ApiParam("查询纬度") @PathVariable Double lat
                                                      ){
         return orderService.findNearestDriver(lon,lat);
+    }
+    @ApiOperation(value = "根据订单id获取评论",notes="如上")
+    @GetMapping("comment/{order_id}")
+    public Comment findCommentById(@PathVariable("order_id") String order_id){
+        return orderService.findCommentById(order_id);
     }
 }

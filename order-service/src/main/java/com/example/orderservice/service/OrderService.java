@@ -3,6 +3,7 @@ package com.example.orderservice.service;
 import com.example.orderservice.dao.DriverMapper;
 import com.example.orderservice.dao.OrderMapper;
 import com.example.orderservice.dao.PassengerMapper;
+import com.example.orderservice.pojo.Comment;
 import com.example.orderservice.pojo.Driver;
 import com.example.orderservice.pojo.Order;
 import com.example.orderservice.pojo.Passenger;
@@ -176,5 +177,8 @@ public class OrderService {
 
     public List<DriverNearbyVo> findNearestDriver(Double lon, Double lat){
         return driverMapper.findNearestDriver(lon,lat);
+    }
+    public Comment findCommentById(String order_id){
+        return orderMapper.findCommentById(order_id);
     }
 }
