@@ -12,12 +12,6 @@ services:
             dockerfile: Dockerfile.order.dev
         ports:
             - 8763:8763
-    favorite:
-        build:
-            context: ./favorite-service/
-            dockerfile: Dockerfile.favorite.dev
-        ports:
-            - 8085:8085
     account:
         build:
             context: ./account-service/
