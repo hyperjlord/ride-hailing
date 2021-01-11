@@ -75,6 +75,7 @@ public class OrderService {
         order.setUser_id(setOrderQO.getUser_id());
         order.setType(setOrderQO.getType());
         order.setState(0);
+        order.setPassenger_num(setOrderQO.getPassenger_num());
         order.setPrice(setOrderQO.getPrice());
         order.setDatetime(setOrderQO.getDatetime());
         order.setFrom_name(setOrderQO.getFrom_name());
