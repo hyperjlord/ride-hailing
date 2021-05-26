@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.orderservice.dao.DriverMapper" >
     <select id="findDriverById" resultType="com.example.orderservice.pojo.Driver">
-        SELECT * FROM soadb.driver WHERE driver_id = #{driver_id};
+        SELECT * FROM ridehailing.driver WHERE driver_id = #{driver_id};
     </select>
     <select id="findDriverFromOrder">
-        SELECT driver_id from soadb.order WHERE order_id = #{order_id};
+        SELECT driver_id from ridehailing.order WHERE order_id = #{order_id};
     </select>
     <update id="updateBalance" parameterType="com.example.orderservice.pojo.Driver">
-        UPDATE soadb.driver SET balance = #{balance} WHERE driver_id = #{driver_id};
+        UPDATE ridehailing.driver SET balance = #{balance} WHERE driver_id = #{driver_id};
     </update>
     <insert id="insertLocation">
-        INSERT INTO soadb.d_location(driver_id)
+        INSERT INTO ridehailing.d_location(driver_id)
         VALUES (#{driver_id});
     </insert>
     <update id="updateLocation">
-        UPDATE soadb.d_location
+        UPDATE ridehailing.d_location
         SET lon=#{lon},lat=#{lat},update_time=#{update_time}
         WHERE driver_id=#{driver_id};
     </update>
@@ -23,7 +23,7 @@
         <association property="driver" column="driver_id" select="findDriverById"/>
     </resultMap>
     <select id="findLocationById" resultMap="DriverLocationMap">
-        SELECT * FROM soadb.driver NATURAL JOIN soadb.d_location WHERE driver_id=#{driver_id};
+        SELECT * FROM ridehailing.driver NATURAL JOIN ridehailing.d_location WHERE driver_id=#{driver_id};
     </select>
     <resultMap id="DriverNearbyMap" type="com.example.orderservice.vo.DriverNearbyVo">
         <association property="driver" column="driver_id" select="findDriverById"/>
@@ -38,7 +38,7 @@
                                    )
                            ) * 1000
                    ) AS distance
-        FROM soadb.d_location NATURAL JOIN soadb.driver
+        FROM ridehailing.d_location NATURAL JOIN ridehailing.driver
         ORDER BY distance ASC;
     </select>
 </mapper>

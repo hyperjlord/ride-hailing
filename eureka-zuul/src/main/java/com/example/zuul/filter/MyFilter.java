@@ -34,7 +34,7 @@ public class MyFilter extends ZuulFilter {
         RequestContext requestContext=RequestContext.getCurrentContext();
         HttpServletRequest httpServletRequest=requestContext.getRequest();
         Object accessToken=httpServletRequest.getParameter("token");
-        if(accessToken!="yj"){
+        if(accessToken!="ok"){
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(401);
             try{

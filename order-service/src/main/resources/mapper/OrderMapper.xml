@@ -8,25 +8,25 @@
         <association property="driver" column="driver_id" javaType="com.example.orderservice.dto.DriverDetailDto" select="findDriverDetailById"/>
     </resultMap>
     <select id="findAllDetail" resultMap="OrderDetailMap">
-        select * from soadb.order natural join soadb.comment;
+        select * from ridehailing.order natural join ridehailing.comment;
     </select>
     <select id="findAllOrderDetailByUidAndState" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE  user_id = #{user_id} AND  `state` = #{state};
+        SELECT * FROM ridehailing.order WHERE  user_id = #{user_id} AND  `state` = #{state};
     </select>
     <select id="findAllOrderDetailByDidAndState" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE  driver_id = #{driver_id} AND  `state` = #{state};
+        SELECT * FROM ridehailing.order WHERE  driver_id = #{driver_id} AND  `state` = #{state};
     </select>
     <select id="findOrderDetailByOrderId" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE order_id = #{order_id} and `type` = #{type};
+        SELECT * FROM ridehailing.order WHERE order_id = #{order_id} and `type` = #{type};
     </select>
     <select id="findOrderDetailByUserId" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE user_id = #{user_id} AND `type` = #{type};
+        SELECT * FROM ridehailing.order WHERE user_id = #{user_id} AND `type` = #{type};
     </select>
     <select id="findOrderDetailByUserIdAndState" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE user_id = #{user_id} AND `type` = #{type} AND `state` = #{state};
+        SELECT * FROM ridehailing.order WHERE user_id = #{user_id} AND `type` = #{type} AND `state` = #{state};
     </select>
     <select id="findOrderDetailByDriverIdAndState" resultMap="OrderDetailMap">
-        SELECT * FROM soadb.order WHERE driver_id = #{driver_id} AND `type` = #{type} AND `state` = #{state};
+        SELECT * FROM ridehailing.order WHERE driver_id = #{driver_id} AND `type` = #{type} AND `state` = #{state};
     </select>
     <resultMap id="OrderWithDistanceVoMap" type="com.example.orderservice.vo.OrderWithDistanceVO">
         <id property="order_id" column="order_id"/>
@@ -45,7 +45,7 @@
                         ) * 1000
                     )
                 AS distance
-        FROM soadb.order
+        FROM ridehailing.order
         WHERE `type` = 2 AND `state`=0
         ORDER BY distance ASC;
     </select>
@@ -69,38 +69,38 @@
                            ) * 1000
                    )
                 )AS distance
-        FROM soadb.order
+        FROM ridehailing.order
         WHERE `type` = #{type} AND `datetime` >= #{datetime} AND `state`= 0
         ORDER BY distance ASC;
     </select>
     <select id="findCommentById" resultType="com.example.orderservice.pojo.Comment">
-        select * from soadb.comment where order_id = #{order_id};
+        select * from ridehailing.comment where order_id = #{order_id};
     </select>
     <select id="findPassengerById" resultType="com.example.orderservice.pojo.Passenger">
-        select * from  soadb.passenger where user_id = #{user_id};
+        select * from  ridehailing.passenger where user_id = #{user_id};
     </select>
     <select id="findDriverById" resultType="com.example.orderservice.pojo.Driver">
-        select * from soadb.driver where driver_id = #{driver_d};
+        select * from ridehailing.driver where driver_id = #{driver_d};
     </select>
     <select id="findCarById" resultType="com.example.orderservice.pojo.Car">
-        select * from soadb.car where driver_id = #{driver_id};
+        select * from ridehailing.car where driver_id = #{driver_id};
     </select>
     <select id="findDriverDetailById" resultType="com.example.orderservice.dto.DriverDetailDto">
-        SELECT * FROM soadb.driver NATURAL JOIN soadb.car WHERE driver_id = #{driver_id};
+        SELECT * FROM ridehailing.driver NATURAL JOIN ridehailing.car WHERE driver_id = #{driver_id};
     </select>
     <update id="takeOrder" >
-        UPDATE soadb.order SET state=1,driver_id=#{driver_id},taken_time=#{taken_time} WHERE order_id = #{order_id};
+        UPDATE ridehailing.order SET state=1,driver_id=#{driver_id},taken_time=#{taken_time} WHERE order_id = #{order_id};
     </update>
     <update id="pickUp">
-        UPDATE soadb.order SET state=2 WHERE order_id = #{order_id};
+        UPDATE ridehailing.order SET state=2 WHERE order_id = #{order_id};
     </update>
     <update id="finishOrder">
-        UPDATE soadb.order SET state=3 WHERE order_id = #{order_id};
+        UPDATE ridehailing.order SET state=3 WHERE order_id = #{order_id};
     </update>
     <insert id="saveComment">
-        INSERT INTO soadb.comment VALUES (#{order_id},#{score},#{content});
+        INSERT INTO ridehailing.comment VALUES (#{order_id},#{score},#{content});
     </insert>
     <delete id="deleteByOid">
-        DELETE FROM soadb.order WHERE order_id = #{order_id} AND `type` = #{type};
+        DELETE FROM ridehailing.order WHERE order_id = #{order_id} AND `type` = #{type};
     </delete>
 </mapper>
