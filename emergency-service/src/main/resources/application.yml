@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://rm-uf6abch2ooa95965t6o.mysql.rds.aliyuncs.com:3306/soadb?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://rm-uf6abch2ooa95965t6o.mysql.rds.aliyuncs.com:3306/ridehailing?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     username: ridehailing01
     password: Hx123456
   jpa:
